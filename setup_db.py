@@ -24,9 +24,12 @@ except Exception as e:
 
 # Clean up failed dir
 data_dir = os.path.abspath("data_p")
-if os.path.exists(data_dir):
-    shutil.rmtree(data_dir)
-os.makedirs(data_dir)
+needs_initialization = False
+if not os.path.exists(data_dir):
+    os.makedirs(data_dir)
+    needs_initialization = True
+elif not os.listdir(data_dir):
+    needs_initialization = True
 
 mysqld_path = shutil.which("mysqld")
 if not mysqld_path: 
@@ -50,33 +53,36 @@ if not mysql_install_db:
 log(f"mysqld: {mysqld_path}")
 log(f"install_db: {mysql_install_db}")
 
-if mysql_install_db:
-    log(f"Initializing data dir: {data_dir}")
-    # MariaDB install
-    cmd = [
-        mysql_install_db, 
-        f"--datadir={data_dir}", 
-        "--auth-root-authentication-method=normal",
-        "--skip-test-db"
-    ]
-    try:
-        subprocess.check_call(cmd, stdout=open(LOG_FILE, 'a'), stderr=subprocess.STDOUT)
-    except Exception as e:
-        log(f"mysql_install_db failed: {e}")
-        # Try mysqld --initialize as fallback (MySQL 5.7/8.0)
-        cmd2 = [mysqld_path, "--initialize-insecure", f"--datadir={data_dir}"]
+if needs_initialization:
+    if mysql_install_db:
+        log(f"Initializing data dir: {data_dir}")
+        # MariaDB install
+        cmd = [
+            mysql_install_db, 
+            f"--datadir={data_dir}", 
+            "--auth-root-authentication-method=normal",
+            "--skip-test-db"
+        ]
         try:
-             subprocess.check_call(cmd2, stdout=open(LOG_FILE, 'a'), stderr=subprocess.STDOUT)
-        except Exception as e2:
-             log(f"mysqld --initialize failed too: {e2}")
+            subprocess.check_call(cmd, stdout=open(LOG_FILE, 'a'), stderr=subprocess.STDOUT)
+        except Exception as e:
+            log(f"mysql_install_db failed: {e}")
+            # Try mysqld --initialize as fallback (MySQL 5.7/8.0)
+            cmd2 = [mysqld_path, "--initialize-insecure", f"--datadir={data_dir}"]
+            try:
+                 subprocess.check_call(cmd2, stdout=open(LOG_FILE, 'a'), stderr=subprocess.STDOUT)
+            except Exception as e2:
+                 log(f"mysqld --initialize failed too: {e2}")
 
+    else:
+        log("Could not find invalid_db tool, trying mysqld --initialize")
+        cmd = [mysqld_path, "--initialize-insecure", f"--datadir={data_dir}"]
+        try:
+            subprocess.check_call(cmd, stdout=open(LOG_FILE, 'a'), stderr=subprocess.STDOUT)
+        except Exception as e:
+            log(f"Init failed: {e}")
 else:
-    log("Could not find invalid_db tool, trying mysqld --initialize")
-    cmd = [mysqld_path, "--initialize-insecure", f"--datadir={data_dir}"]
-    try:
-        subprocess.check_call(cmd, stdout=open(LOG_FILE, 'a'), stderr=subprocess.STDOUT)
-    except Exception as e:
-        log(f"Init failed: {e}")
+    log("Data directory exists. Skipping initialization.")
 
 # Start server
 log("Starting server on port 3307...")
@@ -121,7 +127,7 @@ if os.path.exists(schema_path):
 
 # Verify users table
 try:
-    subprocess.check_call([mysql_client, "-u", "root", "--port=3307", "-h", "127.0.0.1", "-e", "SHOW TABLES IN habit_tracker;"], stdout=open(LOG_FILE, 'a'), stderr=subprocess.STDOUT)
+    subprocess.check_call([mysql_client, "-u", "root", "--port=3307", "-h", "127.0.0.1", "-e", "SHOW TABLES IN user_auth;"], stdout=open(LOG_FILE, 'a'), stderr=subprocess.STDOUT)
 except:
     pass
 
