@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
         cb(null, userDir);
     },
     filename: (req, file, cb) => {
-        // Keep original name
+        // Keep original name, but maybe sanitize it
         cb(null, file.originalname);
     }
 });
@@ -52,26 +52,43 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     try {
         const filePath = file.path;
         const fileHash = await computeHash(filePath);
-        // Store metadata in DB
+        // Store metadata in DB (habit_tracker_db)
         await pool.execute(
-            'INSERT INTO uploads (user_id, filename, filehash) VALUES (?, ?, ?)',
+            'INSERT INTO habit_tracker_db.uploads (user_id, filename, filehash) VALUES (?, ?, ?)',
             [userId, file.originalname, fileHash]
         );
-        res.json({ success: true, fileHash });
+        res.json({ success: true, fileHash, filename: file.originalname });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'DB error' });
     }
 });
 
+// Serve file endpoint
+// Access: /files/:userId/:filename
+router.get('/files/:userId/:filename', async (req, res) => {
+    const { userId, filename } = req.params;
+    // TODO: Add permission check here:
+    // 1. Is req.user.id === userId?
+    // 2. OR is this file part of a thread the user can see?
+    
+    const filePath = path.join(uploadsBase, userId, filename);
+    if (fs.existsSync(filePath)) {
+        res.sendFile(filePath);
+    } else {
+        res.status(404).send('File not found');
+    }
+});
+
+
 // Cleanup routine – remove files without DB entry OR expired files (run on server start)
 async function cleanupOrphanedFiles() {
     try {
-        const expirationMs = 30 * 24 * 60 * 60 * 1000; // 30 days
+        const expirationMs = 10 * 24 * 60 * 60 * 1000; // 10 days
         const now = Date.now();
 
         // 1. Get all valid files from DB
-        const [rows] = await pool.execute('SELECT user_id, filename, uploaded_at FROM uploads');
+        const [rows] = await pool.execute('SELECT user_id, filename, uploaded_at FROM habit_tracker_db.uploads');
         const validFiles = new Map(); // path -> uploaded_at timestamp
 
         for (const r of rows) {
@@ -102,7 +119,7 @@ async function cleanupOrphanedFiles() {
                 if (now - uploadTime > expirationMs) {
                     fs.unlinkSync(fullPath);
                     // Also remove from DB
-                    await pool.execute('DELETE FROM uploads WHERE user_id = ? AND filename = ?', [dir, f]);
+                    await pool.execute('DELETE FROM habit_tracker_db.uploads WHERE user_id = ? AND filename = ?', [dir, f]);
                     console.log('Removed expired file', fullPath);
                 }
             }

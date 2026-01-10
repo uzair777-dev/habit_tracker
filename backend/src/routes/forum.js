@@ -17,7 +17,7 @@ function getAnonId(req) {
 // Get all threads (public)
 router.get('/threads', async (req, res) => {
     try {
-        const [rows] = await pool.execute('SELECT id, title, content, created_at FROM forum_threads ORDER BY created_at DESC');
+        const [rows] = await pool.execute('SELECT id, title, content, created_at FROM forum_db.forum_threads ORDER BY created_at DESC');
         res.json(rows);
     } catch (err) {
         console.error(err);
@@ -32,7 +32,7 @@ router.post('/threads', async (req, res) => {
     const anonId = getAnonId(req);
     if (!title || !content) return res.status(400).json({ error: 'Missing fields' });
     try {
-        await pool.execute('INSERT INTO forum_threads (user_id, title, content) VALUES (?, ?, ?)', [userId, title, content]);
+        await pool.execute('INSERT INTO forum_db.forum_threads (user_id, title, content) VALUES (?, ?, ?)', [userId, title, content]);
         // Return anonId so client can store it if needed
         res.json({ success: true, anonId });
     } catch (err) {
@@ -45,7 +45,7 @@ router.post('/threads', async (req, res) => {
 router.get('/threads/:threadId/posts', async (req, res) => {
     const threadId = req.params.threadId;
     try {
-        const [rows] = await pool.execute('SELECT id, user_id, content, created_at FROM forum_posts WHERE thread_id = ? ORDER BY created_at ASC', [threadId]);
+        const [rows] = await pool.execute('SELECT id, user_id, content, created_at FROM forum_db.forum_posts WHERE thread_id = ? ORDER BY created_at ASC', [threadId]);
         res.json(rows);
     } catch (err) {
         console.error(err);
@@ -60,7 +60,7 @@ router.post('/threads/:threadId/posts', async (req, res) => {
     const anonId = getAnonId(req);
     if (!content) return res.status(400).json({ error: 'Missing content' });
     try {
-        await pool.execute('INSERT INTO forum_posts (thread_id, user_id, content) VALUES (?, ?, ?)', [threadId, userId || null, content]);
+        await pool.execute('INSERT INTO forum_db.forum_posts (thread_id, user_id, content) VALUES (?, ?, ?)', [threadId, userId || null, content]);
         res.json({ success: true, anonId });
     } catch (err) {
         console.error(err);

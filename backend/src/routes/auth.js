@@ -20,7 +20,7 @@ router.post('/signup', async (req, res) => {
     const userId = generateUserId();
     const createdAt = Date.now();
     try {
-        await pool.execute('INSERT INTO users (id, email, password, created_at) VALUES (?, ?, ?, ?)', [userId, email, password, createdAt]);
+        await pool.execute('INSERT INTO user_auth.users (id, email, password, created_at) VALUES (?, ?, ?, ?)', [userId, email, password, createdAt]);
         res.json({ success: true, userId });
     } catch (err) {
         console.error(err);
@@ -33,7 +33,7 @@ router.post('/login', async (req, res) => {
     const { email, password, remember } = req.body;
     if (!email || !password) return res.json({ success: false, message: 'Missing fields' });
     try {
-        const [rows] = await pool.execute('SELECT id, password FROM users WHERE email = ?', [email]);
+        const [rows] = await pool.execute('SELECT id, password FROM user_auth.users WHERE email = ?', [email]);
         if (rows.length === 0) return res.json({ success: false, message: 'User not found' });
         const user = rows[0];
         if (user.password !== password) return res.json({ success: false, message: 'Invalid password' });

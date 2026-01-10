@@ -67,8 +67,8 @@ export default function Dashboard({ user }) {
         setIsUploading(true);
 
         const formData = new FormData();
-        formData.append('file', file);
         formData.append('userId', user.id);
+        formData.append('file', file);
 
         try {
             await axios.post('/api/upload', formData, {
@@ -144,7 +144,9 @@ export default function Dashboard({ user }) {
                             <div key={file.id} className="glass-panel" style={{ padding: '12px', display: 'flex', alignItems: 'center', gap: '12px' }} title={file.filehash}>
                                 <FileText size={20} color="var(--text-secondary)" />
                                 <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
-                                    {file.filename}
+                                    <a href={`http://localhost:4000/api/files/${user.id}/${file.filename}`} target="_blank" rel="noreferrer" style={{color: 'inherit', textDecoration: 'none'}}>
+                                        {file.filename}
+                                    </a>
                                 </div>
                                 <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{new Date(file.uploaded_at).toLocaleDateString()}</span>
                             </div>
