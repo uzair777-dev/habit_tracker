@@ -80,8 +80,23 @@ router.get('/files/:userId/:filename', async (req, res) => {
     }
 });
 
+// List uploads for a user
+router.get('/uploads', async (req, res) => {
+    const userId = req.query.userId;
+    if (!userId) return res.json({ uploads: [] });
+    try {
+        const [rows] = await pool.execute(
+            'SELECT id, filename, filehash, uploaded_at FROM habit_tracker_db.uploads WHERE user_id = ? ORDER BY uploaded_at DESC',
+            [userId]
+        );
+        res.json({ uploads: rows });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'DB error' });
+    }
+});
 
-// Cleanup routine – remove files without DB entry OR expired files (run on server start)
+// Cleanup routine – remove files without DB entry OR expired files + empty dirs
 async function cleanupOrphanedFiles() {
     try {
         const expirationMs = 10 * 24 * 60 * 60 * 1000; // 10 days
@@ -99,11 +114,19 @@ async function cleanupOrphanedFiles() {
         // 2. Walk through uploads directory
         if (!fs.existsSync(uploadsBase)) return;
         const userDirs = fs.readdirSync(uploadsBase);
+        
         for (const dir of userDirs) {
             const dirPath = path.join(uploadsBase, dir);
             if (!fs.statSync(dirPath).isDirectory()) continue;
 
             const files = fs.readdirSync(dirPath);
+            
+            // If dir is empty, remove it
+            if (files.length === 0) {
+                fs.rmdirSync(dirPath);
+                continue;
+            }
+
             for (const f of files) {
                 const fullPath = path.join(dirPath, f);
 
@@ -122,6 +145,11 @@ async function cleanupOrphanedFiles() {
                     await pool.execute('DELETE FROM habit_tracker_db.uploads WHERE user_id = ? AND filename = ?', [dir, f]);
                     console.log('Removed expired file', fullPath);
                 }
+            }
+            
+            // Re-check if dir is empty after cleanup
+            if (fs.readdirSync(dirPath).length === 0) {
+                fs.rmdirSync(dirPath);
             }
         }
     } catch (e) {

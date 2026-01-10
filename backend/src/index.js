@@ -31,5 +31,7 @@ app.use(express.static(path.resolve(__dirname, '../../frontend/dist')));
 const PORT = config.backendPort || 4000;
 app.listen(PORT, async () => {
     await cleanupOrphanedFiles();
+    // Run cleanup every hour
+    setInterval(cleanupOrphanedFiles, 60 * 60 * 1000); 
     console.log(`Backend server listening on port ${PORT}`);
 });
