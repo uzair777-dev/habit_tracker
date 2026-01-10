@@ -32,3 +32,4 @@ env/
 # IDEs
 .vscode/
 .idea/
+/data_p
