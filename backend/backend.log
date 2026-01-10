@@ -1,0 +1,16 @@
+nohup: ignoring input
+Cleanup error Error: connect ECONNREFUSED 127.0.0.1:3307
+    at PromisePool.execute (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/mysql2/lib/promise/pool.js:54:22)
+    at cleanupOrphanedFiles (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/src/routes/upload.js:74:35)
+    at Server.<anonymous> (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/src/index.js:33:11)
+    at Object.onceWrapper (node:events:622:28)
+    at Server.emit (node:events:520:35)
+    at emitListeningNT (node:net:1983:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:88:21) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+Backend server listening on port 4000

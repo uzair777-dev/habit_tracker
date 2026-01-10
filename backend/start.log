@@ -1,0 +1,6 @@
+nohup: ignoring input
+
+> habit-tracker-backend@1.0.0 start
+> node src/index.js
+
+Backend server listening on port 4000
