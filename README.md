@@ -13,7 +13,7 @@ Nexus is a state-of-the-art Habit Tracker and Community Forum built with a React
 
 ## Architecture
 
--   **Frontend**: React + Vite + Tahttps://www.irctc.co.in/nget/train-searchilwind CSS (located in `frontend/`)
+-   **Frontend**: React + Vite + Tailwind CSS (located in `frontend/`)
 -   **Backend**: Node.js + Express (located in `backend/`)
 -   **Database**: MariaDB/MySQL running locally on port 3307 (managed by `setup_db.py`)
 -   **Configuration**: `config/config.json`
