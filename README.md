@@ -2,6 +2,16 @@
 
 Nexus is a state-of-the-art Habit Tracker and Community Forum built with a React (Vite) frontend and Node.js/Express backend, backed by a managed local MySQL/MariaDB instance.
 
+------------------------
+
+## Notice
+
+This project is just our yearly project for college stuff, we might not update it further.
+But, bare in mind that when I will leave this project be it will be in a great shape (Hopefully).
+And probably will be documented properly.(Foreshadowing)
+
+------------------------
+
 ## Features
 
 -   **Public Forum**: Anonymous posting with persistent identity via cookies.
@@ -88,10 +98,10 @@ Click the link shown in the terminal (e.g., `http://localhost:5173`) to open the
 
 ## Usage Guide
 
-1.  **Access the App**: Navigate to the frontend URL (http://localhost:5173).
+1.  **Access the App**: Navigate to the frontend URL (http://localhost:5173, or any url that will be given while starting the frontend server).
 2.  **Identity**: Your User ID is automatically generated and stored in a cookie. You can see it in the Navbar.
-3.  **Forum**: Post anonymous messages. Your User ID is attached to your posts.
-4.  **Habits**: Add habits to track. These are saved to your ID.
+3.  **Forum**: Post anonymous messages. Your User ID is attached to your posts(yet to implement, will probably implement).
+4.  **Habits**: Add habits to track. These are saved to your ID(yet to implement \*again*).
 5.  **Files**: Upload files. The system calculates a hash to prevent duplicates and stores metadata in the DB.
 
 ## Troubleshooting
