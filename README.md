@@ -8,7 +8,7 @@ Nexus is a state-of-the-art Habit Tracker and Community Forum built with a React
 
 This project is just our yearly project for college stuff, we might not update it further.
 But, bare in mind that when I will leave this project be it will be in a great shape (Hopefully).
-And probably will be documented properly.(Foreshadowing)
+~~And probably will be documented properly.~~ (Foreshadowing)
 
 ------------------------
 
@@ -37,6 +37,7 @@ And probably will be documented properly.(Foreshadowing)
 
 ## Installation & Setup
 
+> Something is better than nothing - Albert Einstein (probably)
 Follow these steps to get the application running completely locally.
 
 ### 1. Install Dependencies
