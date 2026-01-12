@@ -7,7 +7,7 @@ Nexus is a state-of-the-art Habit Tracker and Community Forum built with a React
 ## Notice
 
 This project is just our yearly project for college stuff, we might not update it further.
-But, bare in mind that when I will leave this project be it will be in a great shape (<sup>Hopefully</sup>).
+But, bare in mind that when I will leave this project be it will be in a great shape <sup>(Hopefully)</sup>.
 ~~And probably will be documented properly.~~ (Foreshadowing)
 
 ------------------------
