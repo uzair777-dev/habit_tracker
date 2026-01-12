@@ -137,4 +137,4 @@ Click the link shown in the terminal (e.g., `http://localhost:5173`) to open the
 
 ## Footnotes
 
-[^1] *Foreshadowing*
+[^1]: *Foreshadowing*
