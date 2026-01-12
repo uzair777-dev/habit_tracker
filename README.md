@@ -38,6 +38,7 @@ But, bare in mind that when I will leave this project be it will be in a great s
 ## Installation & Setup
 
 > Something is better than nothing - Albert Einstein (probably)
+
 Follow these steps to get the application running completely locally.
 
 ### 1. Install Dependencies
