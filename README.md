@@ -15,7 +15,7 @@ But, bare in mind that when I will leave this project be it will be in a great s
 ## Features
 
 -   **Public Forum**: Anonymous posting with persistent identity via cookies [^2].
--   **Habit Tracker**: Track your daily habits and streaks personalized to your user ID.
+-   **Habit Tracker**: Track your daily habits and streaks personalized to your user ID [^2].
 -   **User System**: Unique 64-bit Hex ID generation based on creation timestamp.
 -   **File Storage**: Secure file upload with deduplication (hashing) and expiration logic.
 -   **Rich UI**: Glassmorphism design with responsive dark mode.
