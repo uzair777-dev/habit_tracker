@@ -108,6 +108,8 @@ Click the link shown in the terminal (e.g., `http://localhost:5173`) to open the
 
 ## Troubleshooting
 
+> These are some measure that i hurdled while developing. Honestly, i don't even know if they'll help or not but here it is
+
 -   **Database Connection Error**:
     -   Ensure `python3 setup_db.py` is running in a separate terminal.
     -   Verify it says "Server seems up".
