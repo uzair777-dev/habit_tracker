@@ -14,7 +14,7 @@ But, bare in mind that when I will leave this project be it will be in a great s
 
 ## Features
 
--   **Public Forum**: Anonymous posting with persistent identity via cookies.
+-   **Public Forum**: Anonymous posting with persistent identity via cookies [^2].
 -   **Habit Tracker**: Track your daily habits and streaks personalized to your user ID.
 -   **User System**: Unique 64-bit Hex ID generation based on creation timestamp.
 -   **File Storage**: Secure file upload with deduplication (hashing) and expiration logic.
@@ -138,3 +138,4 @@ Click the link shown in the terminal (e.g., `http://localhost:5173`) to open the
 ## Footnotes
 
 [^1]: *Foreshadowing*
+[^2]: Yet to be implemented 
