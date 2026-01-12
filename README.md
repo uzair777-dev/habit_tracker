@@ -1,6 +1,6 @@
 # Nexus - Habit Tracker & Forum
 
-Nexus is a state-of-the-art Habit Tracker and Community Forum built with a React (Vite) frontend and Node.js/Express backend, backed by a managed local MySQL/MariaDB instance.
+Nexus is a state-of-the-art<sub>(lol)</sub> Habit Tracker and Community Forum built with a React (Vite) frontend and Node.js/Express backend, backed by a managed local MySQL/MariaDB instance.
 
 ------------------------
 
