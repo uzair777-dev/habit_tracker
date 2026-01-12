@@ -8,7 +8,7 @@ Nexus is a state-of-the-art<sub>(lol)</sub> Habit Tracker and Community Forum bu
 
 This project is just our yearly project for college stuff, we might not update it further.
 But, bare in mind that when I will leave this project be it will be in a great shape <sup>(Hopefully)</sup>.
-~~And probably will be documented properly.~~ (Foreshadowing)
+~~And probably will be documented properly.~~ [^1]
 
 ------------------------
 
@@ -131,3 +131,10 @@ Click the link shown in the terminal (e.g., `http://localhost:5173`) to open the
 ├── setup_db.py         # DB orchestration script
 └── README.md           # This file
 ```
+
+
+ -------
+
+## Footnotes
+
+[^1] *Foreshadowing*
