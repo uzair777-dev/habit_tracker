@@ -43,7 +43,7 @@ Follow these steps to get the application running completely locally.
 
 ### 1. Install Dependencies
 
-You need to install dependencies for both the backend and frontend.
+You need to install dependencies for both the backend and frontend. Both of them have a different node env, so yeah...
 
 ```bash
 # Install Backend Dependencies
@@ -60,7 +60,7 @@ cd ..
 
 ### 2. Initialize and Run Database
 
-We use a custom Python script to spin up a local, isolated MariaDB instance on port `3307`. This prevents conflicts with any existing MySQL installations on your system.
+It uses a custom Python script to spin up a local, isolated MariaDB instance on port `3307`. Why you ask? Why not? 😆. Also this prevents conflicts with any existing MySQL installations on your system.
 
 **Open a new terminal** in the project root and run:
 
@@ -72,7 +72,7 @@ python3 setup_db.py
 -   This script initializes the database in the `data_p/` directory.
 -   It starts the MariaDB server.
 -   It imports the schema from `db/schema.sql`.
--   **You must keep this terminal window OPEN.** If you close it, the database server will stop.
+-   **You must keep this terminal window OPEN.** If you close it, the database server will stop <sub>*duh*</sub>. Also applies to other terminal windows.
 
 ### 3. Start the Backend Server
 
