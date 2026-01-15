@@ -19,6 +19,17 @@ CREATE TABLE IF NOT EXISTS habits (
     user_id VARCHAR(255) NOT NULL,
     name VARCHAR(255) NOT NULL,
     streak INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user_auth.users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS habit_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    habit_id INT NOT NULL,
+    user_id VARCHAR(255) NOT NULL,
+    completed_date DATE NOT NULL,
+    UNIQUE KEY unique_log (habit_id, completed_date),
+    FOREIGN KEY (habit_id) REFERENCES habits(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES user_auth.users(id) ON DELETE CASCADE
 );
 
@@ -29,6 +40,19 @@ CREATE TABLE IF NOT EXISTS uploads (
     filehash VARCHAR(255) NOT NULL,
     uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES user_auth.users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS habit_completions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    habit_id INT NOT NULL,
+    user_id VARCHAR(255) NOT NULL,
+    completion_date DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_habit_date (habit_id, completion_date),
+    FOREIGN KEY (habit_id) REFERENCES habits(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES user_auth.users(id) ON DELETE CASCADE,
+    INDEX idx_user_date (user_id, completion_date),
+    INDEX idx_habit_date (habit_id, completion_date)
 );
 
 -- 3. Forum Threads Database

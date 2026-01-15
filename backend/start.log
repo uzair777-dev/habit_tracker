@@ -1,6 +1,148 @@
-nohup: ignoring input
 
 > habit-tracker-backend@1.0.0 start
 > node src/index.js
 
 Backend server listening on port 4000
+Error: Cannot add or update a child row: a foreign key constraint fails (`habit_tracker`.`habits`, CONSTRAINT `habits_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)
+    at PromisePool.execute (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/mysql2/lib/promise/pool.js:54:22)
+    at /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/src/routes/habits.js:112:37
+    at Layer.handle [as handle_request] (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:284:15
+    at router.process_params (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:280:10)
+    at router.handle (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:175:3) {
+  code: 'ER_NO_REFERENCED_ROW_2',
+  errno: 1452,
+  sql: 'INSERT INTO habits (user_id, name, streak) VALUES (?, ?, 0)',
+  sqlState: '23000',
+  sqlMessage: 'Cannot add or update a child row: a foreign key constraint fails (`habit_tracker`.`habits`, CONSTRAINT `habits_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE)'
+}
+Error: Table 'habit_tracker.habit_completions' doesn't exist
+    at PromisePool.execute (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/mysql2/lib/promise/pool.js:54:22)
+    at /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/src/routes/habits.js:189:42
+    at Layer.handle [as handle_request] (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:284:15
+    at router.process_params (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:280:10)
+    at router.handle (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:175:3) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT hc.habit_id, h.name as habit_name, hc.completion_date \n' +
+    '               FROM habit_completions hc\n' +
+    '               JOIN habits h ON hc.habit_id = h.id\n' +
+    '               WHERE hc.user_id = ? AND hc.completion_date BETWEEN ? AND ?\n' +
+    '               ORDER BY hc.completion_date DESC',
+  sqlState: '42S02',
+  sqlMessage: "Table 'habit_tracker.habit_completions' doesn't exist"
+}
+Error: Table 'habit_tracker.habit_completions' doesn't exist
+    at PromisePool.execute (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/mysql2/lib/promise/pool.js:54:22)
+    at /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/src/routes/habits.js:189:42
+    at Layer.handle [as handle_request] (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:284:15
+    at router.process_params (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:280:10)
+    at router.handle (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:175:3) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT hc.habit_id, h.name as habit_name, hc.completion_date \n' +
+    '               FROM habit_completions hc\n' +
+    '               JOIN habits h ON hc.habit_id = h.id\n' +
+    '               WHERE hc.user_id = ? AND hc.completion_date BETWEEN ? AND ?\n' +
+    '               ORDER BY hc.completion_date DESC',
+  sqlState: '42S02',
+  sqlMessage: "Table 'habit_tracker.habit_completions' doesn't exist"
+}
+Error: Table 'habit_tracker.habit_completions' doesn't exist
+    at PromisePool.execute (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/mysql2/lib/promise/pool.js:54:22)
+    at /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/src/routes/habits.js:189:42
+    at Layer.handle [as handle_request] (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:284:15
+    at router.process_params (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:280:10)
+    at router.handle (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:175:3) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT hc.habit_id, h.name as habit_name, hc.completion_date \n' +
+    '               FROM habit_completions hc\n' +
+    '               JOIN habits h ON hc.habit_id = h.id\n' +
+    '               WHERE hc.user_id = ? AND hc.completion_date BETWEEN ? AND ?\n' +
+    '               ORDER BY hc.completion_date DESC',
+  sqlState: '42S02',
+  sqlMessage: "Table 'habit_tracker.habit_completions' doesn't exist"
+}
+Error: Table 'habit_tracker.habit_completions' doesn't exist
+    at PromisePool.execute (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/mysql2/lib/promise/pool.js:54:22)
+    at /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/src/routes/habits.js:189:42
+    at Layer.handle [as handle_request] (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:284:15
+    at router.process_params (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:280:10)
+    at router.handle (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:175:3) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT hc.habit_id, h.name as habit_name, hc.completion_date \n' +
+    '               FROM habit_completions hc\n' +
+    '               JOIN habits h ON hc.habit_id = h.id\n' +
+    '               WHERE hc.user_id = ? AND hc.completion_date BETWEEN ? AND ?\n' +
+    '               ORDER BY hc.completion_date DESC',
+  sqlState: '42S02',
+  sqlMessage: "Table 'habit_tracker.habit_completions' doesn't exist"
+}
+Error: Table 'habit_tracker.habit_completions' doesn't exist
+    at PromisePool.execute (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/mysql2/lib/promise/pool.js:54:22)
+    at /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/src/routes/habits.js:189:42
+    at Layer.handle [as handle_request] (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:284:15
+    at router.process_params (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:280:10)
+    at router.handle (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:175:3) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT hc.habit_id, h.name as habit_name, hc.completion_date \n' +
+    '               FROM habit_completions hc\n' +
+    '               JOIN habits h ON hc.habit_id = h.id\n' +
+    '               WHERE hc.user_id = ? AND hc.completion_date BETWEEN ? AND ?\n' +
+    '               ORDER BY hc.completion_date DESC',
+  sqlState: '42S02',
+  sqlMessage: "Table 'habit_tracker.habit_completions' doesn't exist"
+}
+Error: Table 'habit_tracker.habit_completions' doesn't exist
+    at PromisePool.execute (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/mysql2/lib/promise/pool.js:54:22)
+    at /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/src/routes/habits.js:189:42
+    at Layer.handle [as handle_request] (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:284:15
+    at router.process_params (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:280:10)
+    at router.handle (/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/backend/node_modules/express/lib/router/index.js:175:3) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT hc.habit_id, h.name as habit_name, hc.completion_date \n' +
+    '               FROM habit_completions hc\n' +
+    '               JOIN habits h ON hc.habit_id = h.id\n' +
+    '               WHERE hc.user_id = ? AND hc.completion_date BETWEEN ? AND ?\n' +
+    '               ORDER BY hc.completion_date DESC',
+  sqlState: '42S02',
+  sqlMessage: "Table 'habit_tracker.habit_completions' doesn't exist"
+}

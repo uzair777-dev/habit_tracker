@@ -1,7 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Upload, CheckCircle, FileText, Trash2, Plus } from 'lucide-react';
+import { Upload, CheckCircle, Circle, FileText, Trash2, Plus } from 'lucide-react';
+
+import HabitCalendar from '../components/HabitCalendar';
 
 export default function Dashboard({ user }) {
     const [habits, setHabits] = useState([]);
@@ -19,14 +20,9 @@ export default function Dashboard({ user }) {
     const fetchHabits = async () => {
         try {
             const res = await axios.get(`/api/habits?userId=${user.id}`);
-            setHabits(res.data.habits || []);
+            setHabits(res.data || []);
         } catch (e) {
             console.error(e);
-            // Stub
-            setHabits([
-                { id: 1, name: 'Drink Water', streak: 5 },
-                { id: 2, name: 'Read Booking', streak: 12 }
-            ]);
         }
     };
 
@@ -51,13 +47,18 @@ export default function Dashboard({ user }) {
         }
     };
 
-    const incrementStreak = async (habitId) => {
+    const toggleComplete = async (habitId, isCompleted) => {
         try {
-            await axios.post(`/api/habits/${habitId}/increment`);
+            if (isCompleted) {
+                // Unmark completion
+                await axios.delete(`/api/habits/${habitId}/complete`);
+            } else {
+                // Mark as complete
+                await axios.post(`/api/habits/${habitId}/complete`, { userId: user.id });
+            }
             fetchHabits();
         } catch (e) {
-            // Optimistic update fallback or alert
-            alert('Failed to update streak');
+            alert('Failed to update habit');
         }
     };
 
@@ -118,8 +119,18 @@ export default function Dashboard({ user }) {
                                 <span style={{ fontWeight: '500' }}>{habit.name}</span>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                                     <span style={{ color: 'var(--accent)', fontWeight: 'bold' }}>🔥 {habit.streak}</span>
-                                    <button onClick={() => incrementStreak(habit.id)} className="btn-secondary" style={{ padding: '8px', color: 'var(--success)', borderColor: 'var(--success)' }}>
-                                        <CheckCircle size={18} />
+                                    <button 
+                                        onClick={() => toggleComplete(habit.id, habit.completedToday)} 
+                                        className="btn-secondary" 
+                                        style={{ 
+                                            padding: '8px', 
+                                            color: habit.completedToday ? 'var(--background)' : 'var(--success)', 
+                                            backgroundColor: habit.completedToday ? 'var(--success)' : 'transparent',
+                                            borderColor: 'var(--success)' 
+                                        }}
+                                        title={habit.completedToday ? 'Mark incomplete' : 'Mark complete'}
+                                    >
+                                        {habit.completedToday ? <CheckCircle size={18} /> : <Circle size={18} />}
                                     </button>
                                 </div>
                             </div>
@@ -154,6 +165,12 @@ export default function Dashboard({ user }) {
                         {uploads.length === 0 && <p style={{ color: 'var(--text-secondary)' }}>No files uploaded.</p>}
                     </div>
                 </section>
+            </div>
+
+            {/* Calendar Section */}
+            <div className="glass-panel" style={{ padding: '32px', marginTop: '32px' }}>
+                <h2 style={{ marginBottom: '24px' }}>Habit Calendar</h2>
+                <HabitCalendar user={user} habits={habits} />
             </div>
         </div>
     );
