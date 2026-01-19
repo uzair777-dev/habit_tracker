@@ -16,7 +16,7 @@ if (!fs.existsSync(uploadsBase)) {
 // Multer storage configuration – store in user‑specific folder
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const userId = req.body.userId;
+        const userId = req.query.userId || req.body.userId;
         if (!userId) return cb(new Error('Missing userId'), null);
         const userDir = path.join(uploadsBase, userId.toString());
         if (!fs.existsSync(userDir)) {

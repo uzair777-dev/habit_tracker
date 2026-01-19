@@ -28,7 +28,7 @@ export default function Dashboard({ user }) {
 
     const fetchUploads = async () => {
         try {
-            const res = await axios.get(`/api/uploads?userId=${user.id}`);
+            const res = await axios.get(`/api/upload/uploads?userId=${user.id}`);
             setUploads(res.data.uploads || []);
         } catch (e) {
             console.error(e);
@@ -72,7 +72,7 @@ export default function Dashboard({ user }) {
         formData.append('file', file);
 
         try {
-            await axios.post('/api/upload', formData, {
+            await axios.post('/api/upload/upload', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             fetchUploads();
@@ -155,7 +155,7 @@ export default function Dashboard({ user }) {
                             <div key={file.id} className="glass-panel" style={{ padding: '12px', display: 'flex', alignItems: 'center', gap: '12px' }} title={file.filehash}>
                                 <FileText size={20} color="var(--text-secondary)" />
                                 <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
-                                    <a href={`http://localhost:4000/api/files/${user.id}/${file.filename}`} target="_blank" rel="noreferrer" style={{color: 'inherit', textDecoration: 'none'}}>
+                                    <a href={`http://localhost:4000/api/upload/files/${user.id}/${file.filename}`} target="_blank" rel="noreferrer" style={{color: 'inherit', textDecoration: 'none'}}>
                                         {file.filename}
                                     </a>
                                 </div>

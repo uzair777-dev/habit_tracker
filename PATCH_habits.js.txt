@@ -1,0 +1,22 @@
+// MANUAL PATCH FOR backend/src/routes/habits.js
+// Line 173 is broken - missing "const query = startDate && endDate"
+// Replace lines 172-182 with the following:
+
+    try {
+        const query = startDate && endDate
+            ? `SELECT hc.habit_id, h.name as habit_name, hc.completion_date 
+               FROM habit_tracker_db.habit_completions hc
+               JOIN habit_tracker_db.habits h ON hc.habit_id = h.id
+               WHERE hc.user_id = ? AND hc.completion_date BETWEEN ? AND ?
+               ORDER BY hc.completion_date DESC`
+            : `SELECT hc.habit_id, h.name as habit_name, hc.completion_date 
+               FROM habit_tracker_db.habit_completions hc
+               JOIN habit_tracker_db.habits h ON hc.habit_id = h.id
+               WHERE hc.user_id = ?
+               ORDER BY hc.completion_date DESC`;
+        
+        const params = startDate && endDate 
+            ? [userId, startDate, endDate]
+            : [userId];
+
+// The rest of the function stays the same

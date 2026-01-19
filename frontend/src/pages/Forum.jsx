@@ -66,17 +66,20 @@ export default function Forum({ user }) {
     const uploadFile = async (file) => {
         if (!file) return null;
         
+        const userId = user?.id || 'anonymous';
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('userId', user?.id || 'anonymous');
+        formData.append('userId', userId);
         
         try {
-            const res = await axios.post(`${API_BASE}/api/upload/upload`, formData, {
+            // Send userId as query param for multer destination callback
+            const userId = user?.id || 'anonymous';
+            const res = await axios.post(`${API_BASE}/api/upload/upload?userId=${userId}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             
             // Return the full URL to the file
-            return `${API_BASE}/api/upload/files/${user?.id || 'anonymous'}/${res.data.filename}`;
+            return `${API_BASE}/api/upload/files/${userId}/${res.data.filename}`;
         } catch (err) {
             console.error('File upload failed:', err);
             throw new Error('File upload failed');

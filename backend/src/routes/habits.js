@@ -51,7 +51,7 @@ router.get('/habits', async (req, res) => {
     try {
         // Get all habits for user
         const [habits] = await pool.execute(
-            'SELECT id, user_id, name FROM habits WHERE user_id = ?',
+            'SELECT id, user_id, name FROM habit_tracker_db.habits WHERE user_id = ?',
             [userId]
         );
         
@@ -67,7 +67,7 @@ router.get('/habits', async (req, res) => {
         
         const [completions] = await pool.execute(
             `SELECT habit_id, completion_date 
-             FROM habit_completions 
+             FROM habit_tracker_db.habit_completions 
              WHERE habit_id IN (${placeholders}) 
              AND completion_date >= ?
              ORDER BY completion_date DESC`,
@@ -110,7 +110,7 @@ router.post('/habits', async (req, res) => {
     
     try {
         const [result] = await pool.execute(
-            'INSERT INTO habits (user_id, name, streak) VALUES (?, ?, 0)',
+            'INSERT INTO habit_tracker_db.habits (user_id, name, streak) VALUES (?, ?, 0)',
             [userId, name]
         );
         res.json({ success: true, habitId: result.insertId });
@@ -132,7 +132,7 @@ router.post('/habits/:id/complete', async (req, res) => {
     try {
         // Insert completion (or ignore if already exists due to unique constraint)
         await pool.execute(
-            'INSERT IGNORE INTO habit_completions (habit_id, user_id, completion_date) VALUES (?, ?, ?)',
+            'INSERT IGNORE INTO habit_tracker_db.habit_completions (habit_id, user_id, completion_date) VALUES (?, ?, ?)',
             [habitId, userId, completionDate]
         );
         
@@ -152,7 +152,7 @@ router.delete('/habits/:id/complete', async (req, res) => {
     
     try {
         await pool.execute(
-            'DELETE FROM habit_completions WHERE habit_id = ? AND completion_date = ?',
+            'DELETE FROM habit_tracker_db.habit_completions WHERE habit_id = ? AND completion_date = ?',
             [habitId, completionDate]
         );
         
@@ -172,13 +172,13 @@ router.get('/habits/completions', async (req, res) => {
     try {
         const query = startDate && endDate
             ? `SELECT hc.habit_id, h.name as habit_name, hc.completion_date 
-               FROM habit_completions hc
-               JOIN habits h ON hc.habit_id = h.id
+               FROM habit_tracker_db.habit_completions hc
+               JOIN habit_tracker_db.habits h ON hc.habit_id = h.id
                WHERE hc.user_id = ? AND hc.completion_date BETWEEN ? AND ?
                ORDER BY hc.completion_date DESC`
             : `SELECT hc.habit_id, h.name as habit_name, hc.completion_date 
-               FROM habit_completions hc
-               JOIN habits h ON hc.habit_id = h.id
+               FROM habit_tracker_db.habit_completions hc
+               JOIN habit_tracker_db.habits h ON hc.habit_id = h.id
                WHERE hc.user_id = ?
                ORDER BY hc.completion_date DESC`;
         
@@ -204,7 +204,7 @@ router.delete('/habits/:id', async (req, res) => {
     
     try {
         await pool.execute(
-            'DELETE FROM habits WHERE id = ? AND user_id = ?',
+            'DELETE FROM habit_tracker_db.habits WHERE id = ? AND user_id = ?',
             [habitId, userId]
         );
         

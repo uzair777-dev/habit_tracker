@@ -16,7 +16,7 @@ export default function Login({ onLogin }) {
         e.preventDefault();
         setError('');
 
-        const endpoint = isLogin ? '/api/login' : '/api/signup';
+        const endpoint = isLogin ? '/api/auth/login' : '/api/auth/signup';
         try {
             const res = await axios.post(endpoint, { email, password, remember });
             if (res.data.success) {
