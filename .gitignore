@@ -1,6 +1,7 @@
 
 # Data directories
 data_p/
+*
 *.db
 *.sqlite
 *.sqlite3
