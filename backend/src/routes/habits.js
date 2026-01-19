@@ -1,10 +1,31 @@
-// backend/src/routes/habits.js
+// COMPLETE UPDATED habits.js with Scheduling Support
+
 const express = require('express');
 const router = express.Router();
 const pool = require('../db');
 
-// Helper function to calculate streak from completions
-function calculateStreak(completions) {
+// Helper function to check if habit is scheduled for a given date
+function isScheduledForDate(habit, date) {
+    const dayOfWeek = date.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+    
+    switch(habit.schedule_type) {
+        case 'daily':
+            return true;
+        case 'weekdays':
+            return dayOfWeek >= 1 && dayOfWeek <= 5;
+        case 'weekends':
+            return dayOfWeek === 0 || dayOfWeek === 6;
+        case 'custom':
+            if (!habit.schedule_days) return false;
+            const days = habit.schedule_days.split(',').map(d => parseInt(d.trim()));
+            return days.includes(dayOfWeek);
+        default:
+            return true;
+    }
+}
+
+// Helper function to calculate streak from completions (schedule-aware)
+function calculateStreak(habit, completions) {
     if (completions.length === 0) return 0;
     
     // Sort completions by date descending (most recent first)
@@ -15,26 +36,35 @@ function calculateStreak(completions) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-    
-    // Check if most recent completion is today or yesterday
+    // Check if most recent completion was today or on the last scheduled day
     const mostRecent = sortedDates[0];
     mostRecent.setHours(0, 0, 0, 0);
     
-    if (mostRecent < yesterday) {
+    // Find the last scheduled day (today or before)
+    let lastScheduledDay = new Date(today);
+    while (!isScheduledForDate(habit, lastScheduledDay) && lastScheduledDay > mostRecent) {
+        lastScheduledDay.setDate(lastScheduledDay.getDate() - 1);
+    }
+    
+    if (mostRecent < lastScheduledDay) {
         return 0; // Streak broken
     }
     
-    // Count consecutive days
+    // Count consecutive scheduled days
     let streak = 0;
-    let expectedDate = new Date(mostRecent);
+    let checkDate = new Date(mostRecent);
     
-    for (const date of sortedDates) {
-        date.setHours(0, 0, 0, 0);
-        if (date.getTime() === expectedDate.getTime()) {
+    for (const completionDate of sortedDates) {
+        completionDate.setHours(0, 0, 0, 0);
+        
+        // Find next scheduled day going backwards
+        while (!isScheduledForDate(habit, checkDate)) {
+            checkDate.setDate(checkDate.getDate() - 1);
+        }
+        
+        if (completionDate.getTime() === checkDate.getTime()) {
             streak++;
-            expectedDate.setDate(expectedDate.getDate() - 1);
+            checkDate.setDate(checkDate.getDate() - 1);
         } else {
             break;
         }
@@ -49,9 +79,9 @@ router.get('/habits', async (req, res) => {
     if (!userId) return res.json({ habits: [] });
     
     try {
-        // Get all habits for user
+        // Get all habits for user with schedule info
         const [habits] = await pool.execute(
-            'SELECT id, user_id, name FROM habit_tracker_db.habits WHERE user_id = ?',
+            'SELECT id, user_id, name, schedule_type, schedule_days FROM habit_tracker_db.habits WHERE user_id = ?',
             [userId]
         );
         
@@ -82,17 +112,21 @@ router.get('/habits', async (req, res) => {
                 .map(c => c.habit_id)
         );
         
-        // Build response with streak and completion status
+        // Build response with streak, completion status, and schedule info
         const habitsWithData = habits.map(habit => {
             const habitCompletions = completions.filter(c => c.habit_id === habit.id);
-            const streak = calculateStreak(habitCompletions);
+            const streak = calculateStreak(habit, habitCompletions);
             const completedToday = todayCompletions.has(habit.id);
+            const scheduledToday = isScheduledForDate(habit, new Date());
             
             return {
                 id: habit.id,
                 name: habit.name,
                 streak,
-                completedToday
+                completedToday,
+                scheduleType: habit.schedule_type,
+                scheduleDays: habit.schedule_days,
+                scheduledToday
             };
         });
         
@@ -105,13 +139,17 @@ router.get('/habits', async (req, res) => {
 
 // Add a new habit
 router.post('/habits', async (req, res) => {
-    const { userId, name } = req.body;
+    const { userId, name, scheduleType, scheduleDays } = req.body;
     if (!userId || !name) return res.status(400).json({ error: 'Missing fields' });
+    
+    const validScheduleTypes = ['daily', 'weekdays', 'weekends', 'custom'];
+    const type = scheduleType && validScheduleTypes.includes(scheduleType) ? scheduleType : 'daily';
+    const days = type === 'custom' ? scheduleDays : null;
     
     try {
         const [result] = await pool.execute(
-            'INSERT INTO habit_tracker_db.habits (user_id, name, streak) VALUES (?, ?, 0)',
-            [userId, name]
+            'INSERT INTO habit_tracker_db.habits (user_id, name, streak, schedule_type, schedule_days) VALUES (?, ?, 0, ?, ?)',
+            [userId, name, type, days]
         );
         res.json({ success: true, habitId: result.insertId });
     } catch (err) {

@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS habits (
     user_id VARCHAR(255) NOT NULL,
     name VARCHAR(255) NOT NULL,
     streak INT DEFAULT 0,
+    schedule_type ENUM('daily', 'weekdays', 'weekends', 'custom') DEFAULT 'daily',
+    schedule_days VARCHAR(50) DEFAULT NULL, -- Comma-separated day numbers (0=Sun, 1=Mon, etc.) for custom schedules
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES user_auth.users(id) ON DELETE CASCADE
 );

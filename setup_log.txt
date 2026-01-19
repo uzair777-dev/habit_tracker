@@ -1726,3 +1726,225 @@ Schema imported successfully.
 Tables_in_user_auth
 users
 Setup DONE. Keeping server active...
+Stopping server...
+2026-01-19 23:17:43 0 [Note] /usr/bin/mysqld (initiated by: unknown): Normal shutdown
+2026-01-19 23:17:43 0 [Note] InnoDB: FTS optimize thread exiting.
+2026-01-19 23:17:43 0 [Note] InnoDB: Starting shutdown...
+2026-01-19 23:17:43 0 [Note] InnoDB: Dumping buffer pool(s) to /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/data_p/ib_buffer_pool
+2026-01-19 23:17:43 0 [Note] InnoDB: Buffer pool(s) dump completed at 260119 23:17:43
+2026-01-19 23:17:43 0 [Note] InnoDB: Removed temporary tablespace data file: "./ibtmp1"
+2026-01-19 23:17:43 0 [Note] InnoDB: Shutdown completed; log sequence number 94945; transaction id 66
+2026-01-19 23:17:43 0 [Note] /usr/bin/mysqld: Shutdown complete
+Server stopped.
+Starting DB Setup (MariaDB aware)
+Checking for existing server on port 3307...
+mysqld: /usr/bin/mysqld
+install_db: /usr/bin/mariadb-install-db
+Data directory exists. Skipping initialization.
+Starting server on port 3307...
+Server process started. PID: 28348
+/usr/bin/mysqld: Can't create file '/var/log/mariadb/mariadb.log' (errno: 13 "Permission denied")
+2026-01-19 23:27:22 0 [Note] Starting MariaDB 10.11.13-MariaDB source revision 8fb09426b98583916ccfd4f8c49741adc115bac3 server_uid HVvDLD8fHbLqpk6gCUGQMInDTf4= as process 28348
+2026-01-19 23:27:22 0 [Note] InnoDB: Compressed tables use zlib 1.3.1.zlib-ng
+2026-01-19 23:27:22 0 [Note] InnoDB: Number of transaction pools: 1
+2026-01-19 23:27:22 0 [Note] InnoDB: Using AVX512 instructions
+2026-01-19 23:27:22 0 [Note] InnoDB: Using Linux native AIO
+2026-01-19 23:27:22 0 [Note] InnoDB: innodb_buffer_pool_size_max=128m, innodb_buffer_pool_size=128m
+2026-01-19 23:27:22 0 [Note] InnoDB: Initialized memory pressure event listener
+2026-01-19 23:27:22 0 [Note] InnoDB: Completed initialization of buffer pool
+2026-01-19 23:27:22 0 [Note] InnoDB: Buffered log writes (block size=512 bytes)
+2026-01-19 23:27:22 0 [Note] InnoDB: End of log at LSN=94945
+2026-01-19 23:27:22 0 [Note] InnoDB: 128 rollback segments are active.
+2026-01-19 23:27:22 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+2026-01-19 23:27:22 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+2026-01-19 23:27:22 0 [Note] InnoDB: log sequence number 94945; transaction id 67
+2026-01-19 23:27:22 0 [Note] InnoDB: Loading buffer pool(s) from /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/data_p/ib_buffer_pool
+2026-01-19 23:27:22 0 [Note] Plugin 'FEEDBACK' is disabled.
+2026-01-19 23:27:22 0 [Note] Server socket created on IP: '127.0.0.1'.
+2026-01-19 23:27:22 0 [Note] InnoDB: Buffer pool(s) load completed at 260119 23:27:22
+2026-01-19 23:27:22 0 [Note] /usr/bin/mysqld: ready for connections.
+Version: '10.11.13-MariaDB'  socket: '/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/data_p/mysql.sock'  port: 3307  MariaDB Server
+Server seems up.
+Importing schema...
+Schema imported successfully.
+Tables_in_user_auth
+users
+Setup DONE. Keeping server active...
+2026-01-19 23:27:35 0 [Note] InnoDB: Memory pressure event disregarded; innodb_buffer_pool_size=128m, innodb_buffer_pool_size_min=128m
+Stopping server...
+2026-01-19 23:29:42 0 [Note] /usr/bin/mysqld (initiated by: unknown): Normal shutdown
+2026-01-19 23:29:42 0 [Note] InnoDB: FTS optimize thread exiting.
+2026-01-19 23:29:42 0 [Note] InnoDB: Starting shutdown...
+2026-01-19 23:29:42 0 [Note] InnoDB: Dumping buffer pool(s) to /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/data_p/ib_buffer_pool
+2026-01-19 23:29:42 0 [Note] InnoDB: Buffer pool(s) dump completed at 260119 23:29:42
+2026-01-19 23:29:42 0 [Note] InnoDB: Removed temporary tablespace data file: "./ibtmp1"
+2026-01-19 23:29:42 0 [Note] InnoDB: Shutdown completed; log sequence number 94945; transaction id 70
+2026-01-19 23:29:42 0 [Note] /usr/bin/mysqld: Shutdown complete
+Server stopped.
+Starting DB Setup (MariaDB aware)
+Checking for existing server on port 3307...
+mysqld: /usr/bin/mysqld
+install_db: /usr/bin/mariadb-install-db
+Initializing data dir: /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/data_p
+Installing MariaDB/MySQL system tables in '/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/data_p' ...
+OK
+
+To start mariadbd at boot time you have to copy
+support-files/mariadb.service to the right place for your system
+
+
+PLEASE REMEMBER TO SET A PASSWORD FOR THE MariaDB root USER !
+To do so, start the server, then issue the following command:
+
+'/usr/bin/mariadb-secure-installation'
+
+which will also give you the option of removing the test
+databases and anonymous user created by default.  This is
+strongly recommended for production servers.
+
+See the MariaDB Knowledgebase at https://mariadb.com/kb
+
+You can start the MariaDB daemon with:
+cd '/usr' ; /usr/bin/mariadbd-safe --datadir='/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/data_p'
+
+You can test the MariaDB daemon with mysql-test-run.pl
+cd '/usr/share/mysql-test' ; perl mariadb-test-run.pl
+
+Please report any problems at https://mariadb.org/jira
+
+The latest information about MariaDB is available at https://mariadb.org/.
+
+Consider joining MariaDB's strong and vibrant community:
+https://mariadb.org/get-involved/
+
+Starting server on port 3307...
+Server process started. PID: 29084
+/usr/bin/mysqld: Can't create file '/var/log/mariadb/mariadb.log' (errno: 13 "Permission denied")
+2026-01-19 23:31:14 0 [Note] Starting MariaDB 10.11.13-MariaDB source revision 8fb09426b98583916ccfd4f8c49741adc115bac3 server_uid HVvDLD8fHbLqpk6gCUGQMInDTf4= as process 29084
+2026-01-19 23:31:14 0 [Note] InnoDB: Compressed tables use zlib 1.3.1.zlib-ng
+2026-01-19 23:31:14 0 [Note] InnoDB: Number of transaction pools: 1
+2026-01-19 23:31:14 0 [Note] InnoDB: Using AVX512 instructions
+2026-01-19 23:31:14 0 [Note] InnoDB: Using Linux native AIO
+2026-01-19 23:31:14 0 [Note] InnoDB: innodb_buffer_pool_size_max=128m, innodb_buffer_pool_size=128m
+2026-01-19 23:31:14 0 [Note] InnoDB: Initialized memory pressure event listener
+2026-01-19 23:31:14 0 [Note] InnoDB: Completed initialization of buffer pool
+2026-01-19 23:31:14 0 [Note] InnoDB: Buffered log writes (block size=512 bytes)
+2026-01-19 23:31:14 0 [Note] InnoDB: End of log at LSN=46846
+2026-01-19 23:31:14 0 [Note] InnoDB: 128 rollback segments are active.
+2026-01-19 23:31:14 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+2026-01-19 23:31:14 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+2026-01-19 23:31:14 0 [Note] InnoDB: log sequence number 46846; transaction id 14
+2026-01-19 23:31:14 0 [Note] Plugin 'FEEDBACK' is disabled.
+2026-01-19 23:31:14 0 [Note] InnoDB: Loading buffer pool(s) from /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/data_p/ib_buffer_pool
+2026-01-19 23:31:14 0 [Note] InnoDB: Buffer pool(s) load completed at 260119 23:31:14
+2026-01-19 23:31:14 0 [Note] Server socket created on IP: '127.0.0.1'.
+2026-01-19 23:31:14 0 [Note] /usr/bin/mysqld: ready for connections.
+Version: '10.11.13-MariaDB'  socket: '/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/data_p/mysql.sock'  port: 3307  MariaDB Server
+2026-01-19 23:31:15 0 [Note] InnoDB: Memory pressure event disregarded; innodb_buffer_pool_size=128m, innodb_buffer_pool_size_min=128m
+Server seems up.
+Importing schema...
+Schema imported successfully.
+Tables_in_user_auth
+users
+Setup DONE. Keeping server active...
+Stopping server...
+2026-01-19 23:32:05 0 [Note] /usr/bin/mysqld (initiated by: unknown): Normal shutdown
+2026-01-19 23:32:05 0 [Note] InnoDB: FTS optimize thread exiting.
+2026-01-19 23:32:05 0 [Note] InnoDB: Starting shutdown...
+2026-01-19 23:32:05 0 [Note] InnoDB: Dumping buffer pool(s) to /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/data_p/ib_buffer_pool
+2026-01-19 23:32:05 0 [Note] InnoDB: Buffer pool(s) dump completed at 260119 23:32:05
+2026-01-19 23:32:05 0 [Note] InnoDB: Removed temporary tablespace data file: "./ibtmp1"
+2026-01-19 23:32:05 0 [Note] InnoDB: Shutdown completed; log sequence number 78224; transaction id 39
+2026-01-19 23:32:05 0 [Note] /usr/bin/mysqld: Shutdown complete
+Server stopped.
+Starting DB Setup (MariaDB aware)
+Checking for existing server on port 3307...
+mysqld: /usr/bin/mysqld
+install_db: /usr/bin/mariadb-install-db
+Data directory exists. Skipping initialization.
+Starting server on port 3307...
+Server process started. PID: 29273
+/usr/bin/mysqld: Can't create file '/var/log/mariadb/mariadb.log' (errno: 13 "Permission denied")
+2026-01-19 23:32:18 0 [Note] Starting MariaDB 10.11.13-MariaDB source revision 8fb09426b98583916ccfd4f8c49741adc115bac3 server_uid HVvDLD8fHbLqpk6gCUGQMInDTf4= as process 29273
+2026-01-19 23:32:18 0 [Note] InnoDB: Compressed tables use zlib 1.3.1.zlib-ng
+2026-01-19 23:32:18 0 [Note] InnoDB: Number of transaction pools: 1
+2026-01-19 23:32:18 0 [Note] InnoDB: Using AVX512 instructions
+2026-01-19 23:32:18 0 [Note] InnoDB: Using Linux native AIO
+2026-01-19 23:32:18 0 [Note] InnoDB: innodb_buffer_pool_size_max=128m, innodb_buffer_pool_size=128m
+2026-01-19 23:32:18 0 [Note] InnoDB: Initialized memory pressure event listener
+2026-01-19 23:32:18 0 [Note] InnoDB: Completed initialization of buffer pool
+2026-01-19 23:32:18 0 [Note] InnoDB: Buffered log writes (block size=512 bytes)
+2026-01-19 23:32:18 0 [Note] InnoDB: End of log at LSN=78224
+2026-01-19 23:32:18 0 [Note] InnoDB: 128 rollback segments are active.
+2026-01-19 23:32:18 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+2026-01-19 23:32:18 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+2026-01-19 23:32:18 0 [Note] InnoDB: log sequence number 78224; transaction id 40
+2026-01-19 23:32:18 0 [Note] InnoDB: Loading buffer pool(s) from /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/data_p/ib_buffer_pool
+2026-01-19 23:32:18 0 [Note] Plugin 'FEEDBACK' is disabled.
+2026-01-19 23:32:18 0 [Note] Server socket created on IP: '127.0.0.1'.
+2026-01-19 23:32:18 0 [Note] InnoDB: Buffer pool(s) load completed at 260119 23:32:18
+2026-01-19 23:32:18 0 [Note] /usr/bin/mysqld: ready for connections.
+Version: '10.11.13-MariaDB'  socket: '/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/data_p/mysql.sock'  port: 3307  MariaDB Server
+2026-01-19 23:32:19 0 [Note] InnoDB: Memory pressure event disregarded; innodb_buffer_pool_size=128m, innodb_buffer_pool_size_min=128m
+Server seems up.
+Importing schema...
+Schema imported successfully.
+Tables_in_user_auth
+users
+Setup DONE. Keeping server active...
+Stopping server...
+2026-01-19 23:33:56 0 [Note] /usr/bin/mysqld (initiated by: unknown): Normal shutdown
+2026-01-19 23:33:56 0 [Note] InnoDB: FTS optimize thread exiting.
+2026-01-19 23:33:56 0 [Note] InnoDB: Starting shutdown...
+2026-01-19 23:33:56 0 [Note] InnoDB: Dumping buffer pool(s) to /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/data_p/ib_buffer_pool
+2026-01-19 23:33:56 0 [Note] InnoDB: Buffer pool(s) dump completed at 260119 23:33:56
+2026-01-19 23:33:56 0 [Note] InnoDB: Removed temporary tablespace data file: "./ibtmp1"
+2026-01-19 23:33:56 0 [Note] InnoDB: Shutdown completed; log sequence number 78776; transaction id 46
+2026-01-19 23:33:56 0 [Note] /usr/bin/mysqld: Shutdown complete
+Server stopped.
+Starting DB Setup (MariaDB aware)
+Checking for existing server on port 3307...
+mysqld: /usr/bin/mysqld
+install_db: /usr/bin/mariadb-install-db
+Data directory exists. Skipping initialization.
+Starting server on port 3307...
+Server process started. PID: 29914
+/usr/bin/mysqld: Can't create file '/var/log/mariadb/mariadb.log' (errno: 13 "Permission denied")
+2026-01-19 23:34:45 0 [Note] Starting MariaDB 10.11.13-MariaDB source revision 8fb09426b98583916ccfd4f8c49741adc115bac3 server_uid HVvDLD8fHbLqpk6gCUGQMInDTf4= as process 29914
+2026-01-19 23:34:45 0 [Note] InnoDB: Compressed tables use zlib 1.3.1.zlib-ng
+2026-01-19 23:34:45 0 [Note] InnoDB: Number of transaction pools: 1
+2026-01-19 23:34:45 0 [Note] InnoDB: Using AVX512 instructions
+2026-01-19 23:34:45 0 [Note] InnoDB: Using Linux native AIO
+2026-01-19 23:34:45 0 [Note] InnoDB: innodb_buffer_pool_size_max=128m, innodb_buffer_pool_size=128m
+2026-01-19 23:34:45 0 [Note] InnoDB: Initialized memory pressure event listener
+2026-01-19 23:34:45 0 [Note] InnoDB: Completed initialization of buffer pool
+2026-01-19 23:34:45 0 [Note] InnoDB: Buffered log writes (block size=512 bytes)
+2026-01-19 23:34:45 0 [Note] InnoDB: End of log at LSN=78776
+2026-01-19 23:34:45 0 [Note] InnoDB: 128 rollback segments are active.
+2026-01-19 23:34:45 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+2026-01-19 23:34:45 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+2026-01-19 23:34:45 0 [Note] InnoDB: log sequence number 78776; transaction id 46
+2026-01-19 23:34:45 0 [Note] Plugin 'FEEDBACK' is disabled.
+2026-01-19 23:34:45 0 [Note] InnoDB: Loading buffer pool(s) from /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/data_p/ib_buffer_pool
+2026-01-19 23:34:45 0 [Note] Server socket created on IP: '127.0.0.1'.
+2026-01-19 23:34:45 0 [Note] InnoDB: Buffer pool(s) load completed at 260119 23:34:45
+2026-01-19 23:34:46 0 [Note] /usr/bin/mysqld: ready for connections.
+Version: '10.11.13-MariaDB'  socket: '/var/home/uzair/.gemini/antigravity/scratch/habit_tracker/data_p/mysql.sock'  port: 3307  MariaDB Server
+2026-01-19 23:34:47 0 [Note] InnoDB: Memory pressure event disregarded; innodb_buffer_pool_size=128m, innodb_buffer_pool_size_min=128m
+Server seems up.
+Importing schema...
+Schema imported successfully.
+Tables_in_user_auth
+users
+Setup DONE. Keeping server active...
+2026-01-19 23:41:26 3 [Warning] Aborted connection 3 to db: 'habit_tracker_db' user: 'root' host: 'localhost' (Got an error reading communication packets)
+Stopping server...
+2026-01-19 23:41:28 0 [Note] /usr/bin/mysqld (initiated by: unknown): Normal shutdown
+2026-01-19 23:41:28 0 [Note] InnoDB: FTS optimize thread exiting.
+2026-01-19 23:41:28 0 [Note] InnoDB: Starting shutdown...
+2026-01-19 23:41:28 0 [Note] InnoDB: Dumping buffer pool(s) to /var/home/uzair/.gemini/antigravity/scratch/habit_tracker/data_p/ib_buffer_pool
+2026-01-19 23:41:28 0 [Note] InnoDB: Buffer pool(s) dump completed at 260119 23:41:28
+2026-01-19 23:41:29 0 [Note] InnoDB: Removed temporary tablespace data file: "./ibtmp1"
+2026-01-19 23:41:29 0 [Note] InnoDB: Shutdown completed; log sequence number 95074; transaction id 66
+2026-01-19 23:41:29 0 [Note] /usr/bin/mysqld: Shutdown complete
+Server stopped.
