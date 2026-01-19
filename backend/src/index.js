@@ -20,10 +20,10 @@ const habitRoutes = require('./routes/habits');
 const forumRoutes = require('./routes/forum');
 const { router: uploadRouter, cleanupOrphanedFiles } = require('./routes/upload');
 
-app.use('/api', authRoutes);
-app.use('/api', habitRoutes);
-app.use('/api', forumRoutes);
-app.use('/api', uploadRouter);
+app.use('/api/auth', authRoutes);
+app.use('/api/habits', habitRoutes);
+app.use('/api/forum', forumRoutes);
+app.use('/api/upload', uploadRouter);
 
 // Serve static frontend (if needed)
 app.use(express.static(path.resolve(__dirname, '../../frontend/dist')));

@@ -56,25 +56,28 @@ CREATE TABLE IF NOT EXISTS habit_completions (
 );
 
 -- 3. Forum Threads Database
+-- Every message is stored in the forum_messages table
+-- Thread ID is a hexadecimal representation of the creation timestamp in milliseconds
+-- Root messages have is_root=1 and may have a root_title
+-- All messages in the same thread share the same thread_id
 CREATE DATABASE IF NOT EXISTS forum_db;
 USE forum_db;
 
-CREATE TABLE IF NOT EXISTS forum_threads (
+CREATE TABLE IF NOT EXISTS forum_messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id VARCHAR(255),
-    title VARCHAR(255) NOT NULL,
-    content TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    -- Note: We might want a foreign key here too, but sometimes forums allow anon or loose references. 
-    -- Adding FK for consistency if user exists.
-    -- FOREIGN KEY (user_id) REFERENCES user_auth.users(id) ON DELETE SET NULL
-);
-
-CREATE TABLE IF NOT EXISTS forum_posts (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    thread_id INT NOT NULL,
-    user_id VARCHAR(255),
-    content TEXT NOT NULL,
+    thread_id VARCHAR(32) NOT NULL,             -- Hexadecimal timestamp (e.g., '18d4f2a1b3c')
+    time BIGINT NOT NULL,                        -- Numerical timestamp in milliseconds
+    user_id VARCHAR(255),                        -- User ID (nullable for anonymous posts)
+    message TEXT NOT NULL,                       -- The actual message content
+    is_root TINYINT(1) NOT NULL DEFAULT 0,      -- 1 if root message, 0 otherwise
+    root_title VARCHAR(255) DEFAULT NULL,        -- Title for root messages (can be auto-generated)
+    attachment VARCHAR(512) DEFAULT NULL,        -- Public shareable hyperlink to uploaded resource
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (thread_id) REFERENCES forum_threads(id) ON DELETE CASCADE
+    -- Virtual column to help enforce unique root constraint
+    root_thread_id VARCHAR(32) GENERATED ALWAYS AS (IF(is_root = 1, thread_id, NULL)) STORED,
+    INDEX idx_thread_id (thread_id),
+    INDEX idx_time (time),
+    INDEX idx_is_root (is_root),
+    -- Ensure only one root per thread (NULL values are not considered duplicate)
+    UNIQUE KEY unique_root_per_thread (root_thread_id)
 );

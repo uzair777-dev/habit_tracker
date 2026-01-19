@@ -102,7 +102,7 @@ Click the link shown in the terminal (e.g., `http://localhost:5173`) to open the
 
 1.  **Access the App**: Navigate to the frontend URL (http://localhost:5173, or any url that will be given while starting the frontend server).
 2.  **Identity**: Your User ID is automatically generated and stored in a cookie. You can see it in the Navbar.
-3.  **Forum**: Post anonymous messages. Your User ID is attached to your posts(yet to implement, will probably implement).
+3.  **Forum**: Fully functional thread-based forum. Create threads, reply to discussions, attach files, and search. Post anonymously or with your user ID when logged in.
 4.  **Habits**: Add habits to track. These are saved to your ID(yet to implement \*again*).
 5.  **Files**: Upload files. The system calculates a hash to prevent duplicates and stores metadata in the DB.
 
@@ -389,7 +389,9 @@ Deletes a message. If root message is deleted, entire thread is removed.
 
 - **[FORUM_ARCHITECTURE.md](FORUM_ARCHITECTURE.md)** - Detailed visual diagrams and architecture explanation
 - **[FORUM_MIGRATION.md](FORUM_MIGRATION.md)** - Migration guide for updating to the new forum schema
-- **Testing**: Run `node backend/test_forum.js` to test the forum API
+- **[FORUM_TESTING.md](FORUM_TESTING.md)** - Complete testing guide for the forum frontend and backend
+- **Backend Testing**: Run `node backend/test_forum.js` to test the forum API
+- **Frontend Testing**: See FORUM_TESTING.md for comprehensive UI testing instructions
 
 ## Footnotes
 
