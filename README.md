@@ -4,8 +4,8 @@ Nexus is a state-of-the-art<sub>(lol)</sub> Habit Tracker and Community Forum bu
 
 ------------------------
 
-> [!CAUTION]
-> 
+> [!WARNING ]
+> This documentation may contain vulgar language, please read it on your own discretion.
 
 ## Notice
 
