@@ -150,32 +150,32 @@ curl http://localhost:4000/api/forum/threads/THREAD_ID
 
 ## Key Features
 
-✅ **Thread ID Generation**: Automatic hex timestamp IDs  
-✅ **Auto-Title Generation**: From first 5 words of message  
-✅ **Root/Reply Hierarchy**: Enforced by database constraint  
-✅ **Attachment Support**: Integrated with upload system  
-✅ **Anonymous Posting**: userId is optional  
-✅ **Search**: Full-text search in threads and messages  
-✅ **Cascade Deletion**: Deleting root deletes entire thread  
+ **Thread ID Generation**: Automatic hex timestamp IDs  
+ **Auto-Title Generation**: From first 5 words of message  
+ **Root/Reply Hierarchy**: Enforced by database constraint  
+ **Attachment Support**: Integrated with upload system  
+ **Anonymous Posting**: userId is optional  
+ **Search**: Full-text search in threads and messages  
+ **Cascade Deletion**: Deleting root deletes entire thread  
 
 ## API Changes
 
 ### Before (Old API)
 ```
-GET  /api/threads              → Get threads
-POST /api/threads              → Create thread
-GET  /api/threads/:id/posts    → Get posts
-POST /api/threads/:id/posts    → Create post
+GET  /api/threads               Get threads
+POST /api/threads               Create thread
+GET  /api/threads/:id/posts     Get posts
+POST /api/threads/:id/posts     Create post
 ```
 
 ### After (New API)
 ```
-GET    /api/forum/threads                  → Get all threads (root messages)
-POST   /api/forum/threads                  → Create new thread
-GET    /api/forum/threads/:threadId        → Get all messages in thread
-POST   /api/forum/threads/:threadId/messages → Add reply to thread
-GET    /api/forum/search?q=term&type=...   → Search forum
-DELETE /api/forum/messages/:messageId      → Delete message
+GET    /api/forum/threads                   Get all threads (root messages)
+POST   /api/forum/threads                   Create new thread
+GET    /api/forum/threads/:threadId         Get all messages in thread
+POST   /api/forum/threads/:threadId/messages  Add reply to thread
+GET    /api/forum/search?q=term&type=...    Search forum
+DELETE /api/forum/messages/:messageId       Delete message
 ```
 
 ## Notes
@@ -201,11 +201,11 @@ Check that you're using the new API endpoints (`/api/forum/threads` not `/api/th
 
 To complete the forum implementation:
 
-1. ✅ Database schema updated
-2. ✅ Backend API implemented
-3. ✅ Documentation written
-4. ⏳ Frontend needs to be updated to use new API
-5. ⏳ UI components for forum (thread list, thread view, reply form)
+1.  Database schema updated
+2.  Backend API implemented
+3.  Documentation written
+4.  Frontend needs to be updated to use new API
+5.  UI components for forum (thread list, thread view, reply form)
 
 ---
 

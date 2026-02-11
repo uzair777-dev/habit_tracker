@@ -14,26 +14,26 @@ But, bare in mind that when I will leave this project be it will be in a great s
 
 ## Features
 
--   **Public Forum**: Thread-based messaging with hex thread IDs, root/reply hierarchy, auto-title generation, and attachment support.
--   **Habit Tracker**: Track your daily habits and streaks personalized to your user ID. [^2]
--   **User System**: Unique 64-bit Hex ID generation based on creation timestamp.
--   **File Storage**: Secure file upload with deduplication (hashing) and expiration logic.
--   **Rich UI**: Glassmorphism design with responsive dark mode.
--   **Local Database Management**: Automated local database instance setup script to avoid system-wide configuration conflicts.
+- **Public Forum**: Thread-based messaging with hex thread IDs, root/reply hierarchy, auto-title generation, and attachment support.
+- **Habit Tracker**: Track your daily habits and streaks personalized to your user ID. [^2]
+- **User System**: Unique 64-bit Hex ID generation based on creation timestamp.
+- **File Storage**: Secure file upload with deduplication (hashing) and expiration logic.
+- **Rich UI**: Glassmorphism design with responsive dark mode.
+- **Local Database Management**: Automated local database instance setup script to avoid system-wide configuration conflicts.
 
 ## Architecture
 
--   **Frontend**: React + Vite + Tailwind CSS (located in `frontend/`)
--   **Backend**: Node.js + Express (located in `backend/`)
--   **Database**: MariaDB/MySQL running locally on port 3307 (managed by `setup_db.py`)
--   **Configuration**: `config/config.json`
+- **Frontend**: React + Vite + Tailwind CSS (located in `frontend/`)
+- **Backend**: Node.js + Express (located in `backend/`)
+- **Database**: MariaDB/MySQL running locally on port 3307 (managed by `setup_db.py`)
+- **Configuration**: `config/config.json`
 
 ## Prerequisites
 
--   **Node.js** (v18 or higher)
--   **npm** (comes with Node.js)
--   **Python 3** (for the database setup script)
--   **MySQL/MariaDB Client** (installed via brew/apt, needed for the `mysql` command)
+- **Node.js** (v18 or higher)
+- **npm** (comes with Node.js)
+- **Python 3** (for the database setup script)
+- **MySQL/MariaDB Client** (installed via brew/apt, needed for the `mysql` command)
 
 ## Installation & Setup
 
@@ -60,7 +60,7 @@ cd ..
 
 ### 2. Initialize and Run Database
 
-It uses a custom Python script to spin up a local, isolated MariaDB instance on port `3307`. Why you ask? Why not? 😆. Also this prevents conflicts with any existing MySQL installations on your system.
+It uses a custom Python script to spin up a local, isolated MariaDB instance on port `3307`. Why you ask? Why not? Also this prevents conflicts with any existing MySQL installations on your system.
 
 **Open a new terminal** in the project root and run:
 
@@ -69,10 +69,11 @@ python3 setup_db.py
 ```
 
 **IMPORTANT:**
--   This script initializes the database in the `data_p/` directory.
--   It starts the MariaDB server.
--   It imports the schema from `db/schema.sql`.
--   **You must keep this terminal window OPEN.** If you close it, the database server will stop <sub>*duh*</sub>. Also applies to other terminal windows.
+
+- This script initializes the database in the `data_p/` directory.
+- It starts the MariaDB server.
+- It imports the schema from `db/schema.sql`.
+- **You must keep this terminal window OPEN.** If you close it, the database server will stop <sub>*duh*</sub>. Also applies to other terminal windows.
 
 ### 3. Start the Backend Server
 
@@ -100,31 +101,31 @@ Click the link shown in the terminal (e.g., `http://localhost:5173`) to open the
 
 ## Usage Guide
 
-1.  **Access the App**: Navigate to the frontend URL (http://localhost:5173, or any url that will be given while starting the frontend server).
-2.  **Identity**: Your User ID is automatically generated and stored in a cookie. You can see it in the Navbar.
-3.  **Forum**: Fully functional thread-based forum. Create threads, reply to discussions, attach files, and search. Post anonymously or with your user ID when logged in.
-4.  **Habits**: Add habits to track. These are saved to your ID(yet to implement \*again*).
-5.  **Files**: Upload files. The system calculates a hash to prevent duplicates and stores metadata in the DB.
+1. **Access the App**: Navigate to the frontend URL (<http://localhost:5173>, or any url that will be given while starting the frontend server).
+2. **Identity**: Your User ID is automatically generated and stored in a cookie. You can see it in the Navbar.
+3. **Forum**: Fully functional thread-based forum. Create threads, reply to discussions, attach files, and search. Post anonymously or with your user ID when logged in.
+4. **Habits**: Add habits to track. These are saved to your ID(yet to implement \*again*).
+5. **Files**: Upload files. The system calculates a hash to prevent duplicates and stores metadata in the DB.
 
 ## Troubleshooting
 
 > These are some measure that i hurdled while developing. Honestly, i don't even know if they'll help or not but here it is
 
--   **Database Connection Error**:
-    -   Ensure `python3 setup_db.py` is running in a separate terminal.
-    -   Verify it says "Server seems up".
-    -   Check if port 3307 is available.
+- **Database Connection Error**:
+  - Ensure `python3 setup_db.py` is running in a separate terminal.
+  - Verify it says "Server seems up".
+  - Check if port 3307 is available.
 
--   **Frontend issues**:
-    -   If the frontend cannot connect to the backend, ensure the backend is running on port 4000.
-    -   Check the browser console for CORS errors (the backend is configured to allow CORS).
+- **Frontend issues**:
+  - If the frontend cannot connect to the backend, ensure the backend is running on port 4000.
+  - Check the browser console for CORS errors (the backend is configured to allow CORS).
 
--   **Port Conflicts**:
-    -   If `setup_db.py` fails, ensure no other process is using port 3307. The script attempts to kill processes on this port, but might need manual intervention.
+- **Port Conflicts**:
+  - If `setup_db.py` fails, ensure no other process is using port 3307. The script attempts to kill processes on this port, but might need manual intervention.
 
 ## Project Structure
 
-```
+```text
 ├── backend/            # Express server source
 │   ├── src/
 │   │   ├── index.js        # Main server entry point
@@ -160,6 +161,7 @@ The application uses three separate MariaDB databases:
 The forum implements a **thread-based messaging system** with the following design:
 
 #### Thread ID Generation
+
 - **Thread ID**: Hexadecimal representation of creation timestamp (milliseconds since epoch)
   - Example: `18d4f2a1b3c` represents timestamp `1704123456700`
   - Generated using: `Date.now().toString(16)`
@@ -199,6 +201,7 @@ Every message in the forum has the following properties:
 #### Title Generation
 
 When creating a root message:
+
 1. If user provides a title → use it directly
 2. If no title provided → auto-generate from message content:
    - Takes first 5 words OR first 50 characters (whichever is shorter)
@@ -208,6 +211,7 @@ When creating a root message:
 #### File Attachments
 
 Attachments are integrated with the upload system:
+
 - Files uploaded via `/api/upload/upload` endpoint
 - Stored in `uploads/[user_id]/[filename]`
 - Hash and metadata saved in `habit_tracker_db.uploads` table
@@ -217,12 +221,15 @@ Attachments are integrated with the upload system:
 ### Forum API Endpoints
 
 #### Get All Threads
+
 ```http
 GET /api/forum/threads
 ```
+
 Returns all root messages (threads) with message count.
 
 **Response:**
+
 ```json
 {
   "threads": [
@@ -243,12 +250,15 @@ Returns all root messages (threads) with message count.
 ```
 
 #### Get Thread Messages
+
 ```http
 GET /api/forum/threads/:threadId
 ```
+
 Returns all messages in a specific thread, ordered chronologically.
 
 **Response:**
+
 ```json
 {
   "messages": [
@@ -277,6 +287,7 @@ Returns all messages in a specific thread, ordered chronologically.
 ```
 
 #### Create New Thread
+
 ```http
 POST /api/forum/threads
 Content-Type: application/json
@@ -290,6 +301,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -300,6 +312,7 @@ Content-Type: application/json
 ```
 
 #### Add Reply to Thread
+
 ```http
 POST /api/forum/threads/:threadId/messages
 Content-Type: application/json
@@ -312,6 +325,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -321,19 +335,24 @@ Content-Type: application/json
 ```
 
 #### Search Forum
+
 ```http
 GET /api/forum/search?q=search_term&type=threads
 ```
+
 Search in threads (root messages only) or all messages.
 
 **Query Parameters:**
+
 - `q`: Search query (required)
 - `type`: `threads` or `messages` (default: `threads`)
 
 #### Delete Message
+
 ```http
 DELETE /api/forum/messages/:messageId
 ```
+
 Deletes a message. If root message is deleted, entire thread is removed.
 
 ### Data Flow Example
@@ -341,13 +360,16 @@ Deletes a message. If root message is deleted, entire thread is removed.
 **Creating a thread with attachment:**
 
 1. User uploads file:
+
    ```bash
    POST /api/upload/upload
    FormData: { file: [binary], userId: "user123" }
    ```
+
    Response: `{ fileHash: "abc...", filename: "document.pdf" }`
 
 2. User creates thread with attachment:
+
    ```bash
    POST /api/forum/threads
    {
@@ -357,9 +379,11 @@ Deletes a message. If root message is deleted, entire thread is removed.
      "attachment": "http://localhost:4000/api/upload/files/user123/document.pdf"
    }
    ```
+
    Response: `{ threadId: "18d4f2a1b3c", ... }`
 
 3. Other users reply:
+
    ```bash
    POST /api/forum/threads/18d4f2a1b3c/messages
    {
@@ -369,9 +393,11 @@ Deletes a message. If root message is deleted, entire thread is removed.
    ```
 
 4. Fetch entire thread:
+
    ```bash
    GET /api/forum/threads/18d4f2a1b3c
    ```
+
    Returns all messages in chronological order.
 
 ### Implementation Details
@@ -381,7 +407,6 @@ Deletes a message. If root message is deleted, entire thread is removed.
 - **Anonymous Posting**: `user_id` is nullable, allowing anonymous forum participation
 - **File Cleanup**: Uploaded files follow expiration logic (10 days) implemented in `upload.js`
 - **Performance**: Indexes on `thread_id`, `time`, and `is_root` for fast queries
-
 
  -------
 
@@ -397,4 +422,3 @@ Deletes a message. If root message is deleted, entire thread is removed.
 
 [^1]: *Foreshadowing*
 [^2]: Yet to be implemented
- 

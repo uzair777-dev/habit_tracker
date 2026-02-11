@@ -1,10 +1,12 @@
-## FILE UPLOAD FIX - Apply these changes
+# FILE UPLOAD FIX - Apply these changes
 
-### Problem:
+## Problem
+
 When uploading files from the forum, multer's `destination` callback runs BEFORE `req.body` is parsed,
 so `req.body.userId` is undefined, causing "Missing userId" error.
 
-### Solution:
+## Solution
+
 Send userId as both query parameter AND body field.
 
 ---
@@ -12,11 +14,13 @@ Send userId as both query parameter AND body field.
 ## FIX 1: backend/src/routes/upload.js (Line 19)
 
 CHANGE LINE 19 FROM:
+
 ```javascript
         const userId = req.body.userId;
 ```
 
 TO:
+
 ```javascript
         const userId = req.query.userId || req.body.userId;
 ```
@@ -28,17 +32,20 @@ This allows multer to get userId from query params during the destination callba
 ## FIX 2: frontend/src/pages/Forum.jsx (Line 74)
 
 CHANGE LINE 74 FROM:
+
 ```javascript
             const res = await axios.post(`${API_BASE}/api/upload/upload`, formData, {
 ```
 
 TO:
+
 ```javascript
             const userId = user?.id || 'anonymous';
             const res = await axios.post(`${API_BASE}/api/upload/upload?userId=${userId}`, formData, {
 ```
 
 AND UPDATE LINE 71 (add userId variable first):
+
 ```javascript
         const userId = user?.id || 'anonymous';
         const formData = new FormData();
@@ -50,7 +57,7 @@ This sends userId in both places so multer can access it.
 
 ---
 
-## QUICK AUTOMATED FIX:
+## QUICK AUTOMATED FIX
 
 Run these sed commands:
 

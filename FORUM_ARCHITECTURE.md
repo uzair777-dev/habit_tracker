@@ -2,15 +2,15 @@
 
 ## Data Structure
 
-```
+```text
 forum_messages Table
 ┌──────────────────────────────────────────────────────────────┐
 │ id | thread_id  | time | user_id | message | is_root | ... │
 ├────┼────────────┼──────┼─────────┼─────────┼─────────┼─────┤
-│  1 │ 18d4f2a1b  │ 1000 │ user123 │ "Hello" │   1     │ ... │ ← ROOT
-│  2 │ 18d4f2a1b  │ 1100 │ user456 │ "Hi!"   │   0     │ ... │ ← Reply
-│  3 │ 18d4f2a1b  │ 1200 │ user789 │ "Hey"   │   0     │ ... │ ← Reply
-│  4 │ 18e5a3c2d  │ 2000 │ user123 │ "New"   │   1     │ ... │ ← ROOT (different thread)
+│  1 │ 18d4f2a1b  │ 1000 │ user123 │ "Hello" │   1     │ ... │  ROOT
+│  2 │ 18d4f2a1b  │ 1100 │ user456 │ "Hi!"   │   0     │ ... │  Reply
+│  3 │ 18d4f2a1b  │ 1200 │ user789 │ "Hey"   │   0     │ ... │  Reply
+│  4 │ 18e5a3c2d  │ 2000 │ user123 │ "New"   │   1     │ ... │  ROOT (different thread)
 └────┴────────────┴──────┴─────────┴─────────┴─────────┴─────┘
            │                                      │
            └─────────── Common Thread ID ─────────┘
@@ -18,32 +18,32 @@ forum_messages Table
 
 ## Thread ID Generation
 
-```
-Current Time (ms) → 1704123456700
-                    ↓ toString(16)
-Thread ID       → "18d4f2a1b3c"
+```text
+Current Time (ms)  1704123456700
+                     toString(16)
+Thread ID        "18d4f2a1b3c"
 ```
 
 ## Message Hierarchy
 
-```
+```text
 Thread: 18d4f2a1b3c
 ┌─────────────────────────────────────────────┐
-│ 🌱 ROOT MESSAGE (is_root = 1)              │
+│ ROOT MESSAGE (is_root = 1)              │
 │ ├─ thread_id: "18d4f2a1b3c"                │
 │ ├─ time: 1704123456700                     │
 │ ├─ root_title: "My First Thread"           │
 │ └─ message: "This is the first post..."    │
 │                                             │
-│   ↓ Replies (share same thread_id)         │
+│    Replies (share same thread_id)         │
 │                                             │
-│ 💬 REPLY 1 (is_root = 0)                   │
+│ REPLY 1 (is_root = 0)                   │
 │ ├─ thread_id: "18d4f2a1b3c"                │
 │ ├─ time: 1704123500000                     │
 │ ├─ root_title: NULL                        │
 │ └─ message: "Great post!"                  │
 │                                             │
-│ 💬 REPLY 2 (is_root = 0)                   │
+│ REPLY 2 (is_root = 0)                   │
 │ ├─ thread_id: "18d4f2a1b3c"                │
 │ ├─ time: 1704123600000                     │
 │ ├─ root_title: NULL                        │
@@ -53,44 +53,46 @@ Thread: 18d4f2a1b3c
 
 ## Auto-Title Generation Logic
 
-```
+```text
 Input Message:
 "This is my first forum post about habit tracking! Want to share my experience."
 
-↓ Take first 5 words OR 50 chars (whichever shorter)
+ Take first 5 words OR 50 chars (whichever shorter)
 
 "This is my first forum..."
 
-↓ If original message is longer, add ellipsis
+ If original message is longer, add ellipsis
 
 Generated Title: "This is my first forum..."
 ```
 
 ## Attachment Flow
 
-```
+``text
+
 1. Upload File
    POST /api/upload/upload
    { file: [binary], userId: "user123" }
-   ↓
+
    Response: { filename: "doc.pdf", fileHash: "abc..." }
-   ↓
+
    File stored: uploads/user123/doc.pdf
 
 2. Create Thread with Attachment
    POST /api/forum/threads
    {
      message: "Check this out!",
-     attachment: "http://localhost:4000/api/upload/files/user123/doc.pdf"
+     attachment: "<http://localhost:4000/api/upload/files/user123/doc.pdf>"
    }
-   ↓
+
    Message created with attachment URL
 
 3. Users Access File
-   GET http://localhost:4000/api/upload/files/user123/doc.pdf
-   ↓
+   GET <http://localhost:4000/api/upload/files/user123/doc.pdf>
+
    File served from uploads/user123/doc.pdf
-```
+
+```text
 
 ## Database Constraint (Unique Root)
 
@@ -100,7 +102,7 @@ root_thread_id = IF(is_root = 1, thread_id, NULL)
 
 Thread: 18d4f2a1b3c
 ┌────────┬───────────┬──────────────────┐
-│ is_root│ thread_id │ root_thread_id   │ ← Unique constraint
+│ is_root│ thread_id │ root_thread_id   │  Unique constraint
 ├────────┼───────────┼──────────────────┤
 │   1    │18d4f2a1b3c│ "18d4f2a1b3c"   │ ✓ Only one non-NULL
 │   0    │18d4f2a1b3c│  NULL           │
@@ -109,14 +111,14 @@ Thread: 18d4f2a1b3c
 └────────┴───────────┴──────────────────┘
 
 Trying to insert another root with same thread_id:
-│   1    │18d4f2a1b3c│ "18d4f2a1b3c"   │ ❌ DUPLICATE! → Error
+│   1    │18d4f2a1b3c│ "18d4f2a1b3c"   │ ❌ DUPLICATE!  Error
 ```
 
 ## API Request Flow
 
 ### Creating a Thread
 
-```
+```text
 Client Request:
 POST /api/forum/threads
 {
@@ -143,7 +145,7 @@ Server Response:
 
 ### Adding a Reply
 
-```
+```text
 Client Request:
 POST /api/forum/threads/18d4f2a1b3c/messages
 {
@@ -168,7 +170,7 @@ Server Response:
 
 ### Fetching Thread Messages
 
-```
+```text
 Client Request:
 GET /api/forum/threads/18d4f2a1b3c
 

@@ -1,40 +1,40 @@
 # Forum Frontend - Testing Guide
 
-## 🎯 What Was Built
+##  What Was Built
 
 The frontend now includes a complete forum implementation with:
 
-✅ **Thread List View**
+ **Thread List View**
 - Display all forum threads with titles, previews, and metadata
 - Message count, timestamps, and user info for each thread
 - Search functionality to find threads
 - Empty state with call-to-action
 
-✅ **Thread Detail View**
+ **Thread Detail View**
 - Full conversation view with all messages
 - Root message highlighted with "OP" badge
 - Chronological message ordering
 - File attachments displayed with download links
 
-✅ **Create Thread**
+ **Create Thread**
 - Modal form with title, message, and file upload
 - Auto-title generation if title is left empty
 - File attachment support (integrates with upload API)
 - Form validation
 
-✅ **Reply to Thread**
+ **Reply to Thread**
 - Reply form at bottom of thread view
 - File attachment support for replies
 - Real-time updates after posting
 
-✅ **UI/UX Features**
+ **UI/UX Features**
 - Glassmorphism design matching app aesthetic
 - Smooth animations and transitions
 - Responsive layout
 - Loading states
 - User-friendly error handling
 
-## 🚀 How to Test
+##  How to Test
 
 ### 1. Start All Services
 
@@ -114,7 +114,7 @@ Open your browser to: `http://localhost:5173` (or the URL shown in Terminal 3)
 3. Click "Search" or press Enter
 4. Results filter to matching threads
 
-## 📸 What You Should See
+##  What You Should See
 
 ### Thread List View
 ```
@@ -124,12 +124,12 @@ Open your browser to: `http://localhost:5173` (or the URL shown in Terminal 3)
 │  [Search bar]                      [Search] │
 ├─────────────────────────────────────────────┤
 │  ┌───────────────────────────────────────┐ │
-│  │ 👤 Title of Thread                    │ │
+│  │  Title of Thread                    │ │
 │  │ Preview of message text...             │ │
-│  │ 👤 User123 | 💬 5 messages | 🕐 2h ago │ │
+│  │  User123 |  5 messages |  2h ago │ │
 │  └───────────────────────────────────────┘ │
 │  ┌───────────────────────────────────────┐ │
-│  │ 👤 Another Thread                      │ │
+│  │  Another Thread                      │ │
 │  │ ...                                    │ │
 │  └───────────────────────────────────────┘ │
 └─────────────────────────────────────────────┘
@@ -138,29 +138,29 @@ Open your browser to: `http://localhost:5173` (or the URL shown in Terminal 3)
 ### Thread Detail View
 ```
 ┌─────────────────────────────────────────────┐
-│  [← Back to Threads]                        │
+│  [ Back to Threads]                        │
 ├─────────────────────────────────────────────┤
 │  Thread Title                               │
-│  🕐 Started Jan 19, 2026, 10:00 PM         │
+│   Started Jan 19, 2026, 10:00 PM         │
 ├─────────────────────────────────────────────┤
 │  ┌───────────────────────────────────────┐ │ Blue border
-│  │ 👤 User123 [OP]     🕐 2h ago        │ │ (root msg)
+│  │  User123 [OP]      2h ago        │ │ (root msg)
 │  │ Original post message content...      │ │
-│  │ [📎 View Attachment]                  │ │
+│  │ [ View Attachment]                  │ │
 │  └───────────────────────────────────────┘ │
 │  ┌───────────────────────────────────────┐ │
-│  │ 👤 User456          🕐 1h ago        │ │
+│  │  User456           1h ago        │ │
 │  │ Reply message content...              │ │
 │  └───────────────────────────────────────┘ │
 ├─────────────────────────────────────────────┤
 │  Post a Reply                               │
 │  [Text area for reply]                      │
 │  [Choose File]                              │
-│                          [Post Reply →]     │
+│                          [Post Reply ]     │
 └─────────────────────────────────────────────┘
 ```
 
-## 🧪 Test Scenarios
+##  Test Scenarios
 
 ### Scenario 1: Anonymous Posting
 1. Don't log in
@@ -199,7 +199,7 @@ Open your browser to: `http://localhost:5173` (or the URL shown in Terminal 3)
 3. Verify results filter correctly
 4. Clear search to see all threads again
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Issue: "Failed to create thread"
 **Check:**
@@ -248,7 +248,7 @@ You can customize the forum appearance in `frontend/src/index.css`:
 --text-secondary: #a0aaec;
 ```
 
-## 📝 API Endpoints Used
+##  API Endpoints Used
 
 The frontend makes these API calls:
 
@@ -260,7 +260,7 @@ The frontend makes these API calls:
 6. **POST** `/api/upload/upload` - Upload file
 7. **GET** `/api/upload/files/:userId/:filename` - Access file
 
-## ✅ Features Checklist
+##  Features Checklist
 
 Backend:
 - [x] Thread creation with hex IDs
@@ -284,19 +284,19 @@ Frontend:
 - [x] Glassmorphism styling
 - [x] Smooth animations
 
-## 🎉 Success Criteria
+##  Success Criteria
 
 Your forum is working correctly if:
 
-✅ You can create threads without logging in (anonymous)
-✅ You can create threads while logged in (with user ID)
-✅ Titles auto-generate if left empty
-✅ You can view full thread conversations
-✅ You can reply to threads
-✅ File attachments upload and display correctly
-✅ Search finds matching threads
-✅ UI looks polished with glassmorphism design
-✅ All transitions are smooth
-✅ No console errors
+ You can create threads without logging in (anonymous)
+ You can create threads while logged in (with user ID)
+ Titles auto-generate if left empty
+ You can view full thread conversations
+ You can reply to threads
+ File attachments upload and display correctly
+ Search finds matching threads
+ UI looks polished with glassmorphism design
+ All transitions are smooth
+ No console errors
 
-Enjoy your fully functional forum! 🚀
+Enjoy your fully functional forum! 
