@@ -4,6 +4,9 @@ Nexus is a state-of-the-art<sub>(lol)</sub> Habit Tracker and Community Forum bu
 
 ------------------------
 
+> [!CAUTION]
+> 
+
 ## Notice
 
 This project is just our yearly project for college stuff, we might not update it further.
