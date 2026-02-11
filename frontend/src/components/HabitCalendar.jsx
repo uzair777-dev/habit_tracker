@@ -47,6 +47,36 @@ export default function HabitCalendar({ user, habits }) {
         });
     };
 
+    const isHabitScheduledForDate = (habit, date) => {
+        // Date range check
+        const dateStr = date.toISOString().split('T')[0];
+        const startDateStr = new Date(habit.startDate).toISOString().split('T')[0];
+        
+        if (dateStr < startDateStr) return false;
+        if (habit.endDate) {
+            const endDateStr = new Date(habit.endDate).toISOString().split('T')[0];
+            if (dateStr > endDateStr) return false;
+        }
+
+        // Schedule type check
+        const dayOfWeek = date.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+        
+        switch(habit.scheduleType) {
+            case 'daily':
+                return true;
+            case 'weekdays':
+                return dayOfWeek >= 1 && dayOfWeek <= 5;
+            case 'weekends':
+                return dayOfWeek === 0 || dayOfWeek === 6;
+            case 'custom':
+                if (!habit.scheduleDays) return false;
+                const days = habit.scheduleDays.split(',').map(d => parseInt(d)); // fixed: split logic same as backend
+                return days.includes(dayOfWeek);
+            default:
+                return true;
+        }
+    };
+
     const previousMonth = () => {
         setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
     };
@@ -79,24 +109,43 @@ export default function HabitCalendar({ user, habits }) {
         const dayCompletions = getCompletionsForDate(date);
         const completionCount = dayCompletions.length;
         const todayClass = isToday(date) ? 'today' : '';
+        
+        // Find all habits scheduled for this day
+        const scheduledHabits = habits ? habits.filter(habit => isHabitScheduledForDate(habit, date)) : [];
 
         calendarDays.push(
             <div 
                 key={day} 
                 className={`calendar-day ${todayClass}`}
-                title={dayCompletions.map(c => c.habit_name).join(', ')}
+                style={{ height: '100px', overflowY: 'auto' }} // Increased height for labels
             >
-                <div className="day-number">{day}</div>
-                {completionCount > 0 && (
-                    <div className="completion-indicator" data-count={Math.min(completionCount, 5)}>
-                        <div className="completion-dots">
-                            {dayCompletions.slice(0, 3).map((completion, idx) => (
-                                <div key={idx} className="completion-dot" title={completion.habit_name}></div>
-                            ))}
-                            {completionCount > 3 && <span className="more-indicator">+{completionCount - 3}</span>}
-                        </div>
-                    </div>
-                )}
+                <div className="day-number" style={{ marginBottom: '4px' }}>{day}</div>
+                
+                <div className="day-habits" style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                    {scheduledHabits.map(habit => {
+                        const isCompleted = dayCompletions.some(c => c.habit_id === habit.id);
+                        return (
+                            <div 
+                                key={habit.id} 
+                                className="habit-label"
+                                title={habit.description || habit.name}
+                                style={{ 
+                                    fontSize: '0.7rem', 
+                                    padding: '2px 4px', 
+                                    borderRadius: '4px',
+                                    backgroundColor: isCompleted ? 'var(--success)' : 'rgba(255, 255, 255, 0.1)',
+                                    color: isCompleted ? 'var(--background)' : 'var(--text-primary)',
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                    cursor: 'help'
+                                }}
+                            >
+                                {habit.name}
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         );
     }
@@ -122,20 +171,10 @@ export default function HabitCalendar({ user, habits }) {
             <div className="calendar-grid">
                 {calendarDays}
             </div>
-
-            {habits && habits.length > 0 && (
-                <div className="calendar-legend">
-                    <h4>Active Habits</h4>
-                    <div className="legend-items">
-                        {habits.map(habit => (
-                            <div key={habit.id} className="legend-item">
-                                <div className="legend-dot"></div>
-                                <span>{habit.name}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
+            
+            <div className="calendar-legend" style={{ marginTop: '16px', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                <p>Habits are displayed on their scheduled dates. Green indicates completion.</p>
+            </div>
         </div>
     );
 }

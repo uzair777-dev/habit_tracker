@@ -15,6 +15,8 @@ export default function Dashboard({ user }) {
     // New habit modal state
     const [showHabitModal, setShowHabitModal] = useState(false);
     const [habitName, setHabitName] = useState('');
+    const [habitDescription, setHabitDescription] = useState('');
+    const [habitEndDate, setHabitEndDate] = useState('');
     const [scheduleType, setScheduleType] = useState('daily');
     const [customDays, setCustomDays] = useState([]);
 
@@ -53,10 +55,14 @@ export default function Dashboard({ user }) {
             await axios.post('/api/habits', { 
                 userId: user.id, 
                 name: habitName,
+                description: habitDescription,
+                endDate: habitEndDate,
                 scheduleType,
                 scheduleDays
             });
             setHabitName('');
+            setHabitDescription('');
+            setHabitEndDate('');
             setScheduleType('daily');
             setCustomDays([]);
             setShowHabitModal(false);
@@ -271,6 +277,35 @@ export default function Dashboard({ user }) {
                                     required
                                     autoFocus
                                 />
+                            </div>
+
+                            <div>
+                                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                                    Description (Optional)
+                                </label>
+                                <textarea
+                                    className="glass-input"
+                                    placeholder="Add details about your habit..."
+                                    value={habitDescription}
+                                    onChange={e => setHabitDescription(e.target.value)}
+                                    style={{ minHeight: '80px', resize: 'vertical' }}
+                                />
+                            </div>
+
+                            <div>
+                                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                                    End Date (Optional)
+                                </label>
+                                <input
+                                    type="date"
+                                    className="glass-input"
+                                    value={habitEndDate}
+                                    onChange={e => setHabitEndDate(e.target.value)}
+                                    min={new Date().toISOString().split('T')[0]}
+                                />
+                                <small style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', marginTop: '4px', display: 'block' }}>
+                                    Leave blank for indefinite habit
+                                </small>
                             </div>
 
                             <div>

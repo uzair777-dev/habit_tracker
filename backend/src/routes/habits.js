@@ -74,14 +74,14 @@ function calculateStreak(habit, completions) {
 }
 
 // Get habits for a user with completion data
-router.get('/habits', async (req, res) => {
+router.get('/', async (req, res) => {
     const userId = req.query.userId;
     if (!userId) return res.json({ habits: [] });
     
     try {
         // Get all habits for user with schedule info
         const [habits] = await pool.execute(
-            'SELECT id, user_id, name, schedule_type, schedule_days FROM habit_tracker_db.habits WHERE user_id = ?',
+            'SELECT id, user_id, name, description, end_date, schedule_type, schedule_days, created_at FROM habit_tracker_db.habits WHERE user_id = ?',
             [userId]
         );
         
@@ -122,6 +122,9 @@ router.get('/habits', async (req, res) => {
             return {
                 id: habit.id,
                 name: habit.name,
+                description: habit.description,
+                startDate: habit.created_at, // Use created_at as start date
+                endDate: habit.end_date,
                 streak,
                 completedToday,
                 scheduleType: habit.schedule_type,
@@ -138,18 +141,20 @@ router.get('/habits', async (req, res) => {
 });
 
 // Add a new habit
-router.post('/habits', async (req, res) => {
-    const { userId, name, scheduleType, scheduleDays } = req.body;
+router.post('/', async (req, res) => {
+    const { userId, name, description, endDate, scheduleType, scheduleDays } = req.body;
     if (!userId || !name) return res.status(400).json({ error: 'Missing fields' });
     
     const validScheduleTypes = ['daily', 'weekdays', 'weekends', 'custom'];
     const type = scheduleType && validScheduleTypes.includes(scheduleType) ? scheduleType : 'daily';
     const days = type === 'custom' ? scheduleDays : null;
+    const desc = description || null;
+    const end = endDate || null;
     
     try {
         const [result] = await pool.execute(
-            'INSERT INTO habit_tracker_db.habits (user_id, name, streak, schedule_type, schedule_days) VALUES (?, ?, 0, ?, ?)',
-            [userId, name, type, days]
+            'INSERT INTO habit_tracker_db.habits (user_id, name, description, end_date, streak, schedule_type, schedule_days) VALUES (?, ?, ?, ?, 0, ?, ?)',
+            [userId, name, desc, end, type, days]
         );
         res.json({ success: true, habitId: result.insertId });
     } catch (err) {
@@ -159,7 +164,7 @@ router.post('/habits', async (req, res) => {
 });
 
 // Mark habit as complete for a specific date (default: today)
-router.post('/habits/:id/complete', async (req, res) => {
+router.post('/:id/complete', async (req, res) => {
     const habitId = req.params.id;
     const { userId, date } = req.body;
     
@@ -182,7 +187,7 @@ router.post('/habits/:id/complete', async (req, res) => {
 });
 
 // Remove habit completion for a specific date (default: today)
-router.delete('/habits/:id/complete', async (req, res) => {
+router.delete('/:id/complete', async (req, res) => {
     const habitId = req.params.id;
     const { date } = req.query;
     
@@ -202,7 +207,7 @@ router.delete('/habits/:id/complete', async (req, res) => {
 });
 
 // Get habit completions for a date range (for calendar view)
-router.get('/habits/completions', async (req, res) => {
+router.get('/completions', async (req, res) => {
     const { userId, startDate, endDate } = req.query;
     
     if (!userId) return res.json({ completions: [] });
@@ -234,7 +239,7 @@ router.get('/habits/completions', async (req, res) => {
 });
 
 // Delete a habit (cascades to completions via foreign key)
-router.delete('/habits/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     const habitId = req.params.id;
     const { userId } = req.query;
     
