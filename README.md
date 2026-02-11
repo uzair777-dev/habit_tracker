@@ -99,8 +99,8 @@ cd frontend
 npm run dev
 ```
 
-The frontend development server will start (usually on **port 5173**).
-Click the link shown in the terminal (e.g., `http://localhost:5173`) to open the application in your browser.
+The frontend development server will start (usually on port specified in the `/config/config.json`).
+Click the link shown in the terminal (e.g., `http://localhost:3000`) to open the application in your browser.
 
 ## Usage Guide
 
