@@ -5,7 +5,7 @@ Nexus is a state-of-the-art<sub>(lol)</sub> Habit Tracker and Community Forum bu
 ------------------------
 
 > [!CAUTION]
-> This documentation may contain vulgar language, please read it on your own discretionn ffs.
+> This documentation may contain vulgar language, please read it on your own discretion ffs.
 
 ## Notice
 
