@@ -4,8 +4,8 @@ Nexus is a state-of-the-art<sub>(lol)</sub> Habit Tracker and Community Forum bu
 
 ------------------------
 
-> [!WARNING]
-> This documentation may contain vulgar language, please read it on your own discretion.
+> [!CAUTION]
+> This documentation may contain vulgar language, please read it on your own discretionn ffs.
 
 ## Notice
 
@@ -21,10 +21,12 @@ But, bare in mind that when I will leave this project be it will be in a great s
 - **Habit Tracker**: Track your daily habits and streaks personalized to your user ID. [^2]
 - **User System**: Unique 64-bit Hex ID generation based on creation timestamp.
 - **File Storage**: Secure file upload with deduplication (hashing) and expiration logic.
-- **Rich UI**: Glassmorphism design with responsive dark mode.
-- **Local Database Management**: Automated local database instance setup script to avoid system-wide configuration conflicts.
+- **Rich UI**: Glassmorphism design with responsive dark mode. [^3]
+- **Local Database Management**: Automated local database instance setup script to avoid system-wide configuration conflicts. [^4]
 
 ## Architecture
+
+Basic overview of the architecture, felt cute, might change later. [^5]
 
 - **Frontend**: React + Vite + Tailwind CSS (located in `frontend/`)
 - **Backend**: Node.js + Express (located in `backend/`)
@@ -40,7 +42,7 @@ But, bare in mind that when I will leave this project be it will be in a great s
 
 ## Installation & Setup
 
-> Something is better than nothing - Albert Einstein (probably)
+> Something is better than nothing - Albert Einstein <sup>*(probably)*
 
 Follow these steps to get the application running completely locally.
 
@@ -87,7 +89,7 @@ cd backend
 npm start
 ```
 
-The server will start on **port 4000** (default) or the port specified in `config/config.json`.
+The server will start on **port `4000`** (default) or the port specified in `config/config.json`.
 You should see: `Backend server listening on port 4000`.
 
 ### 4. Start the Frontend Application
@@ -100,15 +102,17 @@ npm run dev
 ```
 
 The frontend development server will start (usually on port specified in the `/config/config.json`).
-Click the link shown in the terminal (e.g., `http://localhost:3000`) to open the application in your browser.
+Click the link shown in the terminal (e.g., `https://localhost:3000`) to open the application in your browser.
 
 ## Usage Guide
 
-1. **Access the App**: Navigate to the frontend URL (<http://localhost:5173>, or any url that will be given while starting the frontend server).
+1. **Access the App**: Navigate to the frontend URL (<https://localhost:3000>, or any url that will be given while starting the frontend server).
 2. **Identity**: Your User ID is automatically generated and stored in a cookie. You can see it in the Navbar.
 3. **Forum**: Fully functional thread-based forum. Create threads, reply to discussions, attach files, and search. Post anonymously or with your user ID when logged in.
-4. **Habits**: Add habits to track. These are saved to your ID(yet to implement \*again*).
+4. **Habits**: Add habits to track. These are saved to your ID ~~(yet to implement \*again*)~~.
 5. **Files**: Upload files. The system calculates a hash to prevent duplicates and stores metadata in the DB.
+
+More Documentation  at [QUICKSTART.md](QUICKSTART.md)
 
 ## Troubleshooting
 
@@ -125,6 +129,15 @@ Click the link shown in the terminal (e.g., `http://localhost:3000`) to open the
 
 - **Port Conflicts**:
   - If `setup_db.py` fails, ensure no other process is using port 3307. The script attempts to kill processes on this port, but might need manual intervention.
+
+**More at these pages**
+
+- [IMPLEMENTATION_UPDATE.md](IMPLEMENTATION_UPDATE.md)
+- [FORUM_TESTING.md](FORUM_TESTING.md)
+- [FORUM_MIGRATION.md](FORUM_MIGRATION.md)
+- [FIXES_APPLIED.md](FIXES_APPLIED.md)
+- [FORUM_TESTING.md](FORUM_TESTING.md)
+- [FIX_UPLOAD.md](FIX_UPLOAD.md)
 
 ## Project Structure
 
@@ -411,7 +424,7 @@ Deletes a message. If root message is deleted, entire thread is removed.
 - **File Cleanup**: Uploaded files follow expiration logic (10 days) implemented in `upload.js`
 - **Performance**: Indexes on `thread_id`, `time`, and `is_root` for fast queries
 
- -------
+------------------------
 
 ## Additional Documentation
 
@@ -424,4 +437,7 @@ Deletes a message. If root message is deleted, entire thread is removed.
 ## Footnotes
 
 [^1]: *Foreshadowing*
-[^2]: Yet to be implemented
+[^2]: ~~Yet to be implemented~~ *partially implemented, i felt exausted*
+[^3]: I'm no designer, it is what it is.
+[^4]: *Yeah.....*
+[^5]: I did not. Rolled with what it is.
