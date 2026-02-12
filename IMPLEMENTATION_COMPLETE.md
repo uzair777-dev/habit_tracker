@@ -2,7 +2,7 @@
 
 ## IMPLEMENTATION COMPLETE
 
-All habit scheduling features have been fully implemented. Here's what's ready:
+All habit scheduling features have been fully implemented [^kinda]. Here's what's ready:
 
 ---
 
@@ -18,7 +18,7 @@ All habit scheduling features have been fully implemented. Here's what's ready:
 
 ### 2. **Backend API**  
 
-**File:** `backend/src/routes/habits.js` (completely rewritten)
+**File:** `backend/src/routes/habits.js` [^4]
 
 **New Features:**
 
@@ -57,9 +57,9 @@ GET /api/habits?userId=user123
 
 ### 3. **Frontend Dashboard**
 
-**File:** `frontend/src/pages/Dashboard.jsx` (completely rewritten)
+**File:** `frontend/src/pages/Dashboard.jsx` [^4]
 
-**New UI Components:**
+**New UI Components:** [^2]
 
 - **"New Habit" Modal** - Beautiful modal with schedule options
 - **Schedule Type Dropdown** - Daily / Weekdays / Weekends / Custom
@@ -67,7 +67,7 @@ GET /api/habits?userId=user123
 - **Schedule Badges** - Color-coded badges on each habit
 - **Smart Toggle Button** - Disabled on non-scheduled days with tooltip
 
-**Visual Design:**
+**Visual Design:** [^3]
 
 ```text
 ┌──────────────────────────────────────────┐
@@ -93,6 +93,9 @@ GET /api/habits?userId=user123
 ---
 
 ## HOW TO USE
+
+> [!NOTE]
+> This is what it is supposed to do, not how will actually look like, so take it with grain of salt. Maybe even less.
 
 ### Creating a Scheduled Habit
 
@@ -221,7 +224,7 @@ Test these scenarios:
 
 ## DATABASE STRUCTURE
 
-### habits table (updated)
+### habits table [^5]
 
 ```text
 id | user_id | name        | schedule_type | schedule_days | streak
@@ -252,6 +255,8 @@ id | user_id | name        | schedule_type | schedule_days | streak
 ```
 
 ### Custom Days Modal
+
+*Why? see[^6]*
 
 ```text
 ┌──────── Create New Habit ────────┐
@@ -316,23 +321,17 @@ npm run dev
 ```
 
 ---
+## Roll the credits
 
-## WHAT'S NEW FOR USERS
+And now Bob's your uncle. You can use it for what it was made for, idk what but its there i guess?
 
-1. **Flexible Scheduling** - Set habits for specific days only
-2. **Smart Tracking** - Can't accidentally complete on wrong days
-3. **Accurate Streaks** - Streaks only break on scheduled days
-4. **Visual Clarity** - Color-coded badges show each habit's schedule
-5. **Better UX** - Clear feedback when habit isn't scheduled
+Who am I kidding, no ones reading this (つ;´꒳`;)つ
 
----
+## Footnotes
 
-## READY TO USE
-
-Everything is implemented and ready. Just:
-
-1. Reset database (removes old data)
-2. Restart backend and frontend  
-3. Start creating scheduled habits!
-
-The habit tracker is now a powerful scheduling system!
+[^kinda]: Implemented paritially cuz i got very exausted, and wanted it to be implemented asap. "( - ⌓ - )
+[^2]: As i said before, I am no designer, but i do take pride in what i do. Its not the prettiest, but it works and who's asking.
+[^3]: *Ahhh...* The dreams to implement stuff (╥﹏╥).
+[^4]: (completely rewritten for 4th time ffs <sub>I hate you javascript</sub>)  (•̀⤙•́ )
+[^5]: database was completely frustrating. I am not touching it again fr.
+[^6]: for some reason i did know how to implement a calendar *I know......*
