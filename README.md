@@ -55,8 +55,8 @@ You need to install dependencies for both the backend and frontend. Both of them
 cd backend
 npm install
 
-# Install Frontend Dependencies
-cd ../frontend
+# Install Frontend Dependencies (Go bck to root first with cd ..)
+cd frontend
 npm install
 
 # Return to root
