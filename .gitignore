@@ -37,3 +37,7 @@ env/
 /data_p
 setup_log.txt
 setup_log.txt
+/uploads
+setup_log.txt
+*.txt
+setup_log.txt
